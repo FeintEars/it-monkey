@@ -1,7 +1,7 @@
 var sum = 0;
 var i=1;
 const interval = setInterval(function(){
-   if (sum < 100){
+   if (sum < 200){
     const number = i % 2;
 
     if (number != 0){
