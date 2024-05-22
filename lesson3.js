@@ -22,9 +22,4 @@ function sayHi(isHi) {
   console.log(`Hi, ${this.name}`);
 }
 
-sayHi.call(
-  {
-    name: 'Fluffy',
-    color: 'black'
-  }
-);
+sayHi.call(cat);
