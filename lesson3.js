@@ -18,7 +18,7 @@ const city = {
   population: 10000000
 }
 
-function sayHi(isHi) {
+function sayHi() {
   console.log(`Hi, ${this.name}`);
 }
 
