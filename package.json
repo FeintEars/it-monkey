@@ -1,5 +1,6 @@
 {
   "name": "yarlol",
+  "type": "module",
   "version": "1.0.0",
   "description": "README file\r Hello World!!!\r my Frend",
   "main": "lesson1.js",

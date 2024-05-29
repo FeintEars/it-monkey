@@ -18,8 +18,8 @@ const peeson1 = {
    breed: 'Amerikan bull'
   }
    
-  function sayHi(isHi) {
+  function sayHi () {
     console.log(`Hello, ${this.name}`);
   } 
   
-  sayHi.call(dog);
+  sayHi.call(auto);
