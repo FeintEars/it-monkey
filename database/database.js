@@ -8,11 +8,13 @@ function generateId() {
   return id;
 }
 
-function Post(title, body, author) {
-  this.id = generateId();
-  this.title = title;
-  this.body = body;
-  this.author = author;
+class Post {
+  constructor(title, body, author) {
+    this.id = generateId();
+    this.title = title;
+    this.body = body;
+    this.author = author;
+  }
 }
 
 const posts = [

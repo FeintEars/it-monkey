@@ -1,5 +1,6 @@
 {
   "name": "lessons",
+  "type": "module",
   "description": "README file Hello World!!!",
   "version": "1.0.0",
   "main": "lesson1.js",
