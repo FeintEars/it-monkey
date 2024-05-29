@@ -1,5 +1,6 @@
 {
   "name": "it-monkey",
+  "type": "module",
   "version": "1.0.0",
   "description": "description for description",
   "main": "lesson1.js",
