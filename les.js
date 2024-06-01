@@ -1,25 +1,47 @@
-const peeson1 = {
-    name: 'Jeck',
-    age: 25
+class Animal {
+  name;
+  age;
+  color;
+
+
+  constructor (name, age, color ) {
+    this.name = name;
+    this.age = age;
+    this.color = color;
+
+}
+ 
+  speak () {
+    console.log  (' say something')
   }
-  
-  const person2 = {
-    name: 'Jesika',
-    age: 33
+
+  birthday () {
+    this.age ++
   }
-  
-  const auto = {
-   name: 'Lanos',
-   color: 'red'
+}
+
+class Cat extends Animal{
+  constructor (name, age) {
+    super( name, age, 'white' );
   }
-  
-  const dog = {
-   name: 'Jora',
-   breed: 'Amerikan bull'
+    speak () {
+    console.log (`${this.name} : Meew!`);
   }
-   
-  function sayHi () {
-    console.log(`Hello, ${this.name}`);
+}
+
+class Dog extends Animal {
+  constructor (name, age) {
+    super(name, age, 'black' );
   } 
-  
-  sayHi.call(auto);
+    speak () {
+      console.log (`${this.name} : Gaf`);
+    }
+}
+
+
+
+const cat1 = new Cat ('Saharok' , 5);
+cat1.speak();
+
+const dog1 = new Dog ('Bob', 8)
+dog1.speak();
