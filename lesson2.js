@@ -24,13 +24,13 @@ import {
   controllerReadPost,
   controllerUpdatePost,
   controllerDeletePost
-} from './controller/controller.js';
+} from './controller/post.js';
 
 
 
 // Frontend developer.
-const post1 = controllerCreatePost("Title 4", "Body 4", "Obby van Buren");
-console.log(post1);
+// const post1 = controllerCreatePost("Title 4", "Body 4", "Obby van Buren");
+// console.log(post1);
 
 
 // controllerUpdatePost(100, "Title 100", "sdkbsjdfb skdfb skd fgsdj");

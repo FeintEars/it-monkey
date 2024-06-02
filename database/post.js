@@ -1,10 +1,8 @@
-// ORM
-
+import { users } from "./user.js";
 
 let id = 0;
 function generateId() {
   id++;
-
   return id;
 }
 
@@ -18,9 +16,9 @@ class Post {
 }
 
 const posts = [
-  new Post("Title 1", "Body 1", "John Doe"),
-  new Post("Title 2", "Body 2", "Bill Gates"),
-  new Post("Title 3", "Body 3", "Steve Jobs"),
+  new Post("Title 1", "Body 1", users[0]),
+  new Post("Title 2", "Body 2", users[0]),
+  new Post("Title 3", "Body 3", users[1]),
 ];
 
 console.log(posts);
