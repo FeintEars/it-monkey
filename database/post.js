@@ -1,4 +1,4 @@
-import { users } from "./user.js";
+import { databaseReadUser } from "./user.js";
 
 let id = 0;
 function generateId() {
@@ -16,9 +16,9 @@ class Post {
 }
 
 const posts = [
-  new Post("Title 1", "Body 1", users[0]),
-  new Post("Title 2", "Body 2", users[0]),
-  new Post("Title 3", "Body 3", users[1]),
+  new Post("Title 1", "Body 1", databaseReadUser(1)),
+  new Post("Title 2", "Body 2", databaseReadUser(1)),
+  new Post("Title 3", "Body 3", databaseReadUser(2)),
 ];
 
 console.log(posts);
@@ -75,19 +75,6 @@ function databaseDeletePost(id) {
     posts.pop();
   }
 }
-
-// CommonJS
-
-/*
-module.exports = {
-  databaseCreatePost,
-  databaseReadPost,
-  databaseUpdatePost,
-  databaseDeletePost,
-};
-*/
-
-// ESModules
 
 export {
   databaseCreatePost,
