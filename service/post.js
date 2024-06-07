@@ -1,13 +1,5 @@
 // CommonJS
 
-/*
-const {
-  databaseCreatePost,
-  databaseReadPost,
-  databaseUpdatePost,
-  databaseDeletePost
-} = require('../database/database.js');
-*/
 
 // ESModules
 
@@ -16,7 +8,7 @@ import {
   databaseReadPost,
   databaseUpdatePost,
   databaseDeletePost
-} from '../database/database.js';
+} from '../database/post.js';
 
 // C - Create
 function serviceCreatePost(title, body, author) {

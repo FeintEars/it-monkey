@@ -24,30 +24,7 @@ import {
   controllerReadPost,
   controllerUpdatePost,
   controllerDeletePost
-} from './controller/controller.js';
+} from './controller/post.js';
 
 
 
-// Frontend developer.
-const post1 = controllerCreatePost("Title 4", "Body 4", "Obby van Buren");
-console.log(post1);
-
-
-// controllerUpdatePost(100, "Title 100", "sdkbsjdfb skdfb skd fgsdj");
-
-/*
-const p1 = 3;
-const post2 = controllerReadPost(p1);
-console.log(post2);
-*/
-
-
-
-
-// CommonJS
-// 2009
-// module.exports + require
-
-// ESModules
-// 2015
-// export + import
