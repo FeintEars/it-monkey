@@ -1,5 +1,4 @@
-// ORM
-
+import {databaseReadUser} from './user.js'
 
 let id = 0;
 function generateId() {
@@ -16,12 +15,12 @@ class Post {
     this.author = author;
   }
 }
-const posts = [
-  new Post("Title 1", "Body 1", "John Doe"),
-  new Post("Title 2", "Body 2", "Bill Gates"),
-  new Post("Title 3", "Body 3", "Steve Jobs"),
-];
 
+const posts = [
+  new Post('Title 1', 'Body 1', databaseReadUser(1)),
+  new Post('Title 2', 'Body 2', databaseReadUser(1)),
+  new Post('Title 3', 'Body 3', databaseReadUser(2)),
+];
 console.log(posts);
 
 // CRUD operations
@@ -76,19 +75,6 @@ function databaseDeletePost(id) {
     posts.pop();
   }
 }
-
-// CommonJS
-
-/*
-module.exports = {
-  databaseCreatePost,
-  databaseReadPost,
-  databaseUpdatePost,
-  databaseDeletePost,
-};
-*/
-
-// ESModules
 
 export {
   databaseCreatePost,

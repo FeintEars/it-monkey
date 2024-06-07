@@ -4,6 +4,7 @@ class Animal {
     color;
 
     constructor(name, age, color)
+    {
         this.name = name;
         this.color = color;
         this.age = age;
@@ -12,7 +13,7 @@ class Animal {
          console.log('say something');
           }
         
-        birthday() {
+    birthday() {
             this.age++;
           }
 }
