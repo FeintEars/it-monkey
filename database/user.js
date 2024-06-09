@@ -1,13 +1,8 @@
-let id = 0;
-function generateId() {
-  id++;
+import { Entity } from "./entity.js";
 
-  return id;
-}
-
-class User {
+class User extends Entity {
   constructor (firstName, lastName, age) {
-    this.id = generateId();
+    super();
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
