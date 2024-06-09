@@ -1,4 +1,5 @@
 import {databaseReadUser} from './user.js'
+import { Entity } from './Entity.js';
 
 let id = 0;
 function generateId() {
@@ -7,9 +8,9 @@ function generateId() {
   return id;
 }
 
-class Post {
+class Post extends Entity {
   constructor (title, body, author) {
-    this.id = generateId();
+    super ();
     this.title = title;
     this.body = body;
     this.author = author;
