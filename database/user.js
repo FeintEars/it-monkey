@@ -1,16 +1,11 @@
-// ORM
+import { Entity } from "./Entity.js";
 
 
-let id = 0;
-function generateId() {
-  id++;
 
-  return id;
-}
 
-class User {
-  constructor(firstName, lastName, age) {
-    this.id = generateId();
+class User extends Entity {
+  constructor (firstName, lastName, age) {
+    super ();
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
