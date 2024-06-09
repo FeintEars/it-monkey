@@ -4,10 +4,10 @@ function generateId() {
   return id;
 }
 
-class Entyti {
+class Entity {
   constructor() {
     this.id = generateId();
   }
 }
 
-export { Entyti }
+export { Entity }

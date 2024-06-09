@@ -16,7 +16,7 @@ import {
   serviceReadPost,
   serviceUpdatePost,
   serviceDeletePost
-} from '../service/service.js';
+} from '../service/post.js';
 
 // C - Create
 function controllerCreatePost(title, body, author) {
