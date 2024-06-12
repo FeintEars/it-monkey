@@ -1,12 +1,12 @@
 class Entity {
-    static counetr = 0;
+    static counter = 0;
     static generateid() {
     Entity.counter++;
     return Entity.counter;
   } 
 
-  construktor () {
-    this.id = Entity.generateid
+  construсtor () {
+    this.id = Entity.generateid()
   }
 }
  
