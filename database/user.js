@@ -51,8 +51,6 @@ function databaseUpdateUser(id, firstName, lastName, age) {
 }
 
 // D - Delete
-
-
 function databaseDeleteUser(id) {
   let isFound = false;
 
@@ -70,7 +68,6 @@ function databaseDeleteUser(id) {
     users.pop();
   }
 }
-
 
 export {
   databaseCreateUser,

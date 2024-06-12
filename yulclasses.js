@@ -18,8 +18,6 @@ class Animal {
           }
 }
 
-
-
 class lion extends Animal{
     constructor (name, age)
         super (name, age, gold)

@@ -1,13 +1,11 @@
-let id=0;
-function generateId() {
-id++;
-return id;
-}
-
 class Entity {
-constructor () {
-this.id = generateId()
+static counter = 0
+static generateId() {
+    Entity.counter++;
+    return Entity.counter;
+}
+constructor(){
+    this.Id = Entity.generateId();
 }
 }
-
-export { Entity }
+export {Entity}

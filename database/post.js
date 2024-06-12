@@ -10,7 +10,7 @@ class Post extends Entity {
   }
 }
 
-let posts = [
+const posts = [
   new Post('Title 1', 'Body 1', databaseReadUser(1)),
   new Post('Title 2', 'Body 2', databaseReadUser(1)),
   new Post('Title 3', 'Body 3', databaseReadUser(2)),
@@ -52,8 +52,6 @@ function databaseUpdatePost(id, title, body, author) {
 }
 
 // D - Delete
-
-/*
 function databaseDeletePost(id) {
   let isFound = false;
 
@@ -71,40 +69,6 @@ function databaseDeletePost(id) {
     posts.pop();
   }
 }
-
-const posts = [
-  { id: 10 },
-  { id: 20 },
-  { id: 40 },
-  { id: 30 },
-];
-
-*/
-
-function databaseDeletePost(id) {
-  let isFound = false;
-
-  for (let i = 0; i < posts.length; i++) {
-    if (posts[i].id === id) {
-      isFound = true;
-
-      delete posts[i];
-      break
-    }
-
-    /*if (isFound) {
-      posts[i] = posts[i + 1];
-    }*/
-  }
-
-  if (isFound) {
-    posts = posts.filter(el=>el != null);
-    //posts.pop();
-  }
-}
-
-databaseDeletePost(6);
-console.log(posts);
 
 export {
   databaseCreatePost,
