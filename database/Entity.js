@@ -1,14 +1,21 @@
-let id = 0;
-function generateId() {
-  id++;
-
-  return id;
-}
-
 class Entity {
-    constructor(){
-        this.id = generateId()
-    }
-}
+    static counetr = 0;
+    static generateid() {
+    Entity.counter++;
+    return Entity.counter;
+  } 
 
-export { Entity } 
+  construktor () {
+    this.id = Entity.generateid
+  }
+}
+ 
+export { Entity }
+
+
+
+
+
+
+
+
