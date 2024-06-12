@@ -1,12 +1,12 @@
-let id = 0;
-function generateId() {
-  id++;
-  return id;
-}
-
 class Entity {
+  static counter = 0;
+  static generateId() {
+    Entity.counter++;
+    return Entity.counter;
+  }
+
   constructor() {
-    this.id = generateId();
+    this.id = Entity.generateId();
   }
 }
 
