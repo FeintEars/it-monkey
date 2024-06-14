@@ -1,16 +1,3 @@
-// CommonJS
-
-/*
-const {
-  databaseCreatePost,
-  databaseReadPost,
-  databaseUpdatePost,
-  databaseDeletePost
-} = require('../database/database.js');
-*/
-
-// ESModules
-
 import {
   databaseCreatePost,
   databaseReadPost,
@@ -39,19 +26,6 @@ function serviceUpdatePost(id, title, body) {
 function serviceDeletePost(id) {
   return databaseDeletePost(id);
 }
-
-// CommonJS
-
-/*
-module.exports = {
-  serviceCreatePost,
-  serviceReadPost,
-  serviceUpdatePost,
-  serviceDeletePost
-};
-*/
-
-// ESModules
 
 export {
   serviceCreatePost,

@@ -1,16 +1,3 @@
-// CommonJS
-
-/*
-const {
-  serviceCreatePost,
-  serviceReadPost,
-  serviceUpdatePost,
-  serviceDeletePost
-} = require('../service/service.js');
-*/
-
-// ESModules
-
 import {
   serviceCreatePost,
   serviceReadPost,
@@ -50,19 +37,6 @@ function controllerUpdatePost(id, title, body) {
 function controllerDeletePost(id) {
   return serviceDeletePost(id);
 }
-
-// CommonJS
-
-/*
-module.exports = {
-  controllerCreatePost,
-  controllerReadPost,
-  controllerUpdatePost,
-  controllerDeletePost
-};
-*/
-
-// ESModules
 
 export {
   controllerCreatePost,

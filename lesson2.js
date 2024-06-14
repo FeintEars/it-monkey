@@ -5,9 +5,9 @@ import {
   controllerDeletePost
 } from './controller/post.js';
 
-
-
-// Frontend developer.
-//const post1 = controllerCreatePost("Title 4", "Body 4", "Obby van Buren");
-//console.log(post1);
-
+import {
+  controllerCreateUser,
+  controllerReadUser,
+  controllerUpdateUser,
+  controllerDeleteUser
+} from './controller/user.js';
