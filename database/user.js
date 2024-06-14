@@ -3,6 +3,7 @@ import { Entity } from "./Entity.js";
 
 
 
+
 class User extends Entity {
   constructor (firstName, lastName, age) {
     super ();
