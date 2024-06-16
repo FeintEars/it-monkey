@@ -1,10 +1,8 @@
 import { Entity } from "./Entity.js";
-let id = 0;
-function generateId() {
-  id++;
 
-  return id;
-}
+
+
+
 
 class User extends Entity {
   constructor (firstName, lastName, age) {
@@ -14,10 +12,11 @@ class User extends Entity {
     this.age = age;
   }
 }
+
 const users = [
-  new User("John", "Doe", 31),
-  new User("Bill", "Gates", 25),
-  new User("Steve", "Jobs", 56),
+  new User("Vasya", "Jobs", 20),
+  new User("Kolya", "Gates", 27),
+  new User("Nikita", "Mask", 14),
 ];
 
 console.log(users);
@@ -74,6 +73,8 @@ function databaseDeleteUser(id) {
     users.pop();
   }
 }
+
+
 
 export {
   databaseCreateUser,
