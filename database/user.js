@@ -1,19 +1,15 @@
 import { Entity } from './entity.js';
 
 class User extends Entity {
-  constructor(firstName, lastName, age, reputation) {
+  constructor(firstName, lastName, age) {
     super();
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
-    this.reputation = reputation;
   }
 }
 
-const users = [
-  new User('John', 'Doe', 20, 150),
-  new User('Steve', 'Jobs', 25, 100)
-]
+const users = [];
 
 // CRUD operations
 
@@ -74,4 +70,5 @@ export {
   databaseReadUser,
   databaseUpdateUser,
   databaseDeleteUser,
+  User,
 }

@@ -1,16 +1,4 @@
-// CommonJS
-
-/*
-const {
-  serviceCreatePost,
-  serviceReadPost,
-  serviceUpdatePost,
-  serviceDeletePost
-} = require('../service/service.js');
-*/
-
-// ESModules
-
+import { User } from '../database/user.js';
 import {
   serviceCreatePost,
   serviceReadPost,
@@ -20,9 +8,8 @@ import {
 
 // C - Create
 function controllerCreatePost(title, body, author) {
-  const indexOfSpace = author.indexOf(' ');
-  if (indexOfSpace === -1 || indexOfSpace === 0 || indexOfSpace === author.length - 1) {
-    console.log('Author must have a first name and a last name separated by a space.');
+  if (author instanceof User === false) {
+    console.log('Author must be an instance of User.');
     return null;
   }
 
@@ -50,19 +37,6 @@ function controllerUpdatePost(id, title, body) {
 function controllerDeletePost(id) {
   return serviceDeletePost(id);
 }
-
-// CommonJS
-
-/*
-module.exports = {
-  controllerCreatePost,
-  controllerReadPost,
-  controllerUpdatePost,
-  controllerDeletePost
-};
-*/
-
-// ESModules
 
 export {
   controllerCreatePost,
