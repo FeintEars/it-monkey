@@ -1,4 +1,4 @@
-import { Entity } from './entity.js';
+import { Entity } from "./entity.js";
 
 class User extends Entity {
   constructor(firstName, lastName, age) {
@@ -65,10 +65,10 @@ function databaseDeleteUser(id) {
   }
 }
 
-export { 
+export {
   databaseCreateUser,
   databaseReadUser,
   databaseUpdateUser,
   databaseDeleteUser,
   User,
-}
+};

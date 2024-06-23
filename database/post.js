@@ -1,5 +1,4 @@
-import { databaseReadUser } from "./user.js";
-import { Entity } from './entity.js';
+import { Entity } from "./entity.js";
 
 class Post extends Entity {
   constructor(title, body, author) {

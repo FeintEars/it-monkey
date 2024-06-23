@@ -3,14 +3,22 @@
   "type": "module",
   "description": "README file Hello World!!!",
   "version": "1.0.0",
-  "main": "lesson1.js",
-  "devDependencies": {},
+  "main": "main.js",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "prettier": "3.3.2"
+  },
   "scripts": {
+    "start": "node main.js",
+    "format": "prettier --write \"**/*.js\"",
+    "lint": "eslint \"**/*.js\" --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "lodash": "^4.17.21"
-  }
+  "license": "ISC"
 }

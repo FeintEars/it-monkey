@@ -1,15 +1,15 @@
-import { User } from '../database/user.js';
+import { User } from "../database/user.js";
 import {
   serviceCreatePost,
   serviceReadPost,
   serviceUpdatePost,
-  serviceDeletePost
-} from '../service/post.js';
+  serviceDeletePost,
+} from "../service/post.js";
 
 // C - Create
 function controllerCreatePost(title, body, author) {
   if (author instanceof User === false) {
-    console.log('Author must be an instance of User.');
+    console.log("Author must be an instance of User.");
     return null;
   }
 
@@ -26,7 +26,7 @@ function controllerUpdatePost(id, title, body) {
   const updatePost = serviceUpdatePost(id, title, body);
 
   if (updatePost === null) {
-    console.log('Post not found.');
+    console.log("Post not found.");
     return null;
   }
 
@@ -42,5 +42,5 @@ export {
   controllerCreatePost,
   controllerReadPost,
   controllerUpdatePost,
-  controllerDeletePost
+  controllerDeletePost,
 };
