@@ -1,25 +1,15 @@
 import { Entity } from "./Entity.js";
 
-
-
-
-
 class User extends Entity {
-  constructor (firstName, lastName, age) {
-    super ();
+  constructor(firstName, lastName, age) {
+    super();
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
   }
 }
 
-const users = [
-  new User("Vasya", "Jobs", 20),
-  new User("Kolya", "Gates", 27),
-  new User("Nikita", "Mask", 14),
-];
-
-console.log(users);
+const users = [];
 
 // CRUD operations
 
@@ -73,8 +63,6 @@ function databaseDeleteUser(id) {
     users.pop();
   }
 }
-
-
 
 export {
   databaseCreateUser,

@@ -1,28 +1,15 @@
-import {databaseReadUser} from './user.js'
-import { Entity } from './Entity.js';
-
-let id = 0;
-function generateId() {
-  id++;
-
-  return id;
-}
+import { Entity } from "./Entity.js";
 
 class Post extends Entity {
-  constructor (title, body, author) {
-    super ();
+  constructor(title, body, author) {
+    super();
     this.title = title;
     this.body = body;
     this.author = author;
   }
 }
 
-const posts = [
-  new Post('Title 1', 'Body 1', databaseReadUser(1)),
-  new Post('Title 2', 'Body 2', databaseReadUser(1)),
-  new Post('Title 3', 'Body 3', databaseReadUser(2)),
-];
-console.log(posts);
+const posts = [];
 
 // CRUD operations
 

@@ -1,11 +1,9 @@
-
-
 import {
   databaseCreatePost,
   databaseReadPost,
   databaseUpdatePost,
-  databaseDeletePost
-} from '../database/post.js';
+  databaseDeletePost,
+} from "../database/post.js";
 
 // C - Create
 function serviceCreatePost(title, body, author) {
@@ -29,11 +27,9 @@ function serviceDeletePost(id) {
   return databaseDeletePost(id);
 }
 
-
-
 export {
   serviceCreatePost,
   serviceReadPost,
   serviceUpdatePost,
-  serviceDeletePost
+  serviceDeletePost,
 };
