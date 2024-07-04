@@ -1,12 +1,8 @@
 import { Entity } from "./Entity.js";
 
-
-
-
-
 class User extends Entity {
-  constructor (firstName, lastName, age) {
-    super ();
+  constructor(firstName, lastName, age) {
+    super();
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
@@ -73,8 +69,6 @@ function databaseDeleteUser(id) {
     users.pop();
   }
 }
-
-
 
 export {
   databaseCreateUser,

@@ -2,7 +2,7 @@ import { databaseReadUser } from "./user.js";
 
 import { Entity } from "./Entity.js";
 
-class Post extends Entity  {
+class Post extends Entity {
   constructor(title, body, author) {
     super();
     this.title = title;
@@ -74,7 +74,6 @@ function databaseDeletePost(id) {
 
 // CommonJS
 
-
 // ESModules
 
 export {
@@ -83,4 +82,3 @@ export {
   databaseUpdatePost,
   databaseDeletePost,
 };
- 

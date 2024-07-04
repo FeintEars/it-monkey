@@ -1,21 +1,13 @@
 class Entity {
-    static counter = 0;
-    static generateid() {
+  static counter = 0;
+  static generateid() {
     Entity.counter++;
     return Entity.counter;
-  } 
+  }
 
-  constructor () {
-    this.id = Entity.generateid()
+  constructor() {
+    this.id = Entity.generateid();
   }
 }
- 
-export { Entity }
 
-
-
-
-
-
-
-
+export { Entity };

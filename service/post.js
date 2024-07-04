@@ -1,14 +1,13 @@
 // CommonJS
 
-
 // ESModules
 
 import {
   databaseCreatePost,
   databaseReadPost,
   databaseUpdatePost,
-  databaseDeletePost
-} from '../database/post.js';
+  databaseDeletePost,
+} from "../database/post.js";
 
 // C - Create
 function serviceCreatePost(title, body, author) {
@@ -49,5 +48,5 @@ export {
   serviceCreatePost,
   serviceReadPost,
   serviceUpdatePost,
-  serviceDeletePost
+  serviceDeletePost,
 };
