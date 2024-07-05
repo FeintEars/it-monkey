@@ -1,7 +1,7 @@
 import { Entity } from "./entity.js";
 
 class User extends Entity {
-  constructor (firstName, lastName, age) {
+  constructor(firstName, lastName, age) {
     super();
     this.firstName = firstName;
     this.lastName = lastName;

@@ -1,11 +1,11 @@
 class Entity {
-static counter = 0
-static generateId() {
+  static counter = 0;
+  static generateId() {
     Entity.counter++;
     return Entity.counter;
-}
-constructor(){
+  }
+  constructor() {
     this.Id = Entity.generateId();
+  }
 }
-}
-export {Entity}
+export { Entity };

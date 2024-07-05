@@ -1,8 +1,8 @@
-import {databaseReadUser} from './user.js'
-import { Entity } from './entity.js';
+import { databaseReadUser } from "./user.js";
+import { Entity } from "./entity.js";
 
 class Post extends Entity {
-  constructor (title, body, author) {
+  constructor(title, body, author) {
     super();
     this.title = title;
     this.body = body;
@@ -11,9 +11,9 @@ class Post extends Entity {
 }
 
 const posts = [
-  new Post('Title 1', 'Body 1', databaseReadUser(1)),
-  new Post('Title 2', 'Body 2', databaseReadUser(1)),
-  new Post('Title 3', 'Body 3', databaseReadUser(2)),
+  new Post("Title 1", "Body 1", databaseReadUser(1)),
+  new Post("Title 2", "Body 2", databaseReadUser(1)),
+  new Post("Title 3", "Body 3", databaseReadUser(2)),
 ];
 console.log(posts);
 
