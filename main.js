@@ -11,3 +11,15 @@ import {
 // Frontend developer.
 const post1 = controllerCreatePost("Title 4", "Body 4", "Obby van Buren");
 console.log(post1);
+
+import express from "express";
+const app = express();
+const port = 3000;
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
