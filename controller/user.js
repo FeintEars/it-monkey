@@ -6,17 +6,17 @@ import {
 } from "../service/user.js";
 
 // C - Create
-function controllerCreateUser(firstName, lastName, age) {
+async function controllerCreateUser(firstName, lastName, age) {
   return serviceCreateUser(firstName, lastName, age);
 }
 
 // R - Read
-function controllerReadUser(id) {
+async function controllerReadUser(id) {
   return serviceReadUser(id);
 }
 
 // U - Update
-function controllerUpdateUser(id, firstName, lastName, age) {
+async function controllerUpdateUser(id, firstName, lastName, age) {
   const updateUser = serviceUpdateUser(id, firstName, lastName, age);
 
   if (updateUser === null) {
@@ -28,7 +28,7 @@ function controllerUpdateUser(id, firstName, lastName, age) {
 }
 
 // D - Delete
-function controllerDeleteUser(id) {
+async function controllerDeleteUser(id) {
   return serviceDeleteUser(id);
 }
 

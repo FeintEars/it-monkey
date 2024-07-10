@@ -7,7 +7,7 @@ import {
 } from "../service/post.js";
 
 // C - Create
-function controllerCreatePost(title, body, author) {
+async function controllerCreatePost(title, body, author) {
   if (author instanceof User === false) {
     console.log("Author must be an instance of User.");
     return null;
@@ -17,12 +17,12 @@ function controllerCreatePost(title, body, author) {
 }
 
 // R - Read
-function controllerReadPost(id) {
+async function controllerReadPost(id) {
   return serviceReadPost(id);
 }
 
 // U - Update
-function controllerUpdatePost(id, title, body) {
+async function controllerUpdatePost(id, title, body) {
   const updatePost = serviceUpdatePost(id, title, body);
 
   if (updatePost === null) {
@@ -34,7 +34,7 @@ function controllerUpdatePost(id, title, body) {
 }
 
 // D - Delete
-function controllerDeletePost(id) {
+async function controllerDeletePost(id) {
   return serviceDeletePost(id);
 }
 

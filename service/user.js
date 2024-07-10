@@ -6,22 +6,22 @@ import {
 } from "../database/user.js";
 
 // C - Create
-function serviceCreateUser(firstName, lastName, age) {
+async function serviceCreateUser(firstName, lastName, age) {
   return databaseCreateUser(firstName, lastName, age);
 }
 
 // R - Read
-function serviceReadUser(id) {
+async function serviceReadUser(id) {
   return databaseReadUser(id);
 }
 
 // U - Update
-function serviceUpdateUser(id, firstName, lastName, age) {
+async function serviceUpdateUser(id, firstName, lastName, age) {
   return databaseUpdateUser(id, firstName, lastName, age);
 }
 
 // D - Delete
-function serviceDeleteUser(id) {
+async function serviceDeleteUser(id) {
   return databaseDeleteUser(id);
 }
 
