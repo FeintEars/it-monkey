@@ -5,7 +5,7 @@ class Entity {
     return Entity.counter;
   }
   constructor() {
-    this.Id = Entity.generateId();
+    this.id = Entity.generateId();
   }
 }
 export { Entity };

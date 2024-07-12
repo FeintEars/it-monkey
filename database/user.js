@@ -19,14 +19,14 @@ console.log(users);
 // CRUD operations
 
 // C - Create
-function databaseCreateUser(firstName, lastName, age) {
+async function databaseCreateUser(firstName, lastName, age) {
   const user = new User(firstName, lastName, age);
   users.push(user);
   return user;
 }
 
 // R - Read
-function databaseReadUser(id) {
+async function databaseReadUser(id) {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id === id) {
       return users[i];
@@ -37,7 +37,7 @@ function databaseReadUser(id) {
 }
 
 // U - Update
-function databaseUpdateUser(id, firstName, lastName, age) {
+async function databaseUpdateUser(id, firstName, lastName, age) {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id === id) {
       users[i].firstName = firstName;
@@ -51,7 +51,7 @@ function databaseUpdateUser(id, firstName, lastName, age) {
 }
 
 // D - Delete
-function databaseDeleteUser(id) {
+async function databaseDeleteUser(id) {
   let isFound = false;
 
   for (let i = 0; i < users.length; i++) {
