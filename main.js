@@ -1,4 +1,5 @@
 import {
+  // eslint-disable-next-line no-unused-vars
   controllerCreatePost,
   // eslint-disable-next-line no-unused-vars
   controllerReadPost,
@@ -7,17 +8,28 @@ import {
   // eslint-disable-next-line no-unused-vars
   controllerDeletePost,
 } from "./controller/post.js";
+import {
+   
+  controllerCreateUser,
+  controllerReadUser,
+  // eslint-disable-next-line no-unused-vars
+  controllerUpdateUser,
+  // eslint-disable-next-line no-unused-vars
+  controllerDeleteUser,
+} from "./controller/user.js";
 
 // Frontend developer.
-const post1 = controllerCreatePost("Title 4", "Body 4", "Obby van Buren");
-console.log(post1);
+const user1 = await controllerCreateUser("ROnald", "Potter", 11);
+console.log(user1);
 
 import express from "express";
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/user/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = await controllerReadUser(id);
+  res.send(user);
 });
 
 app.listen(port, () => {

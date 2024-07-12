@@ -14,14 +14,14 @@ const posts = [];
 // CRUD operations
 
 // C - Create
-function databaseCreatePost(title, body, author) {
+async function databaseCreatePost(title, body, author) {
   const post = new Post(title, body, author);
   posts.push(post);
   return post;
 }
 
 // R - Read
-function databaseReadPost(id) {
+async function databaseReadPost(id) {
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       return posts[i];
@@ -32,7 +32,7 @@ function databaseReadPost(id) {
 }
 
 // U - Update
-function databaseUpdatePost(id, title, body, author) {
+async function databaseUpdatePost(id, title, body, author) {
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       posts[i].title = title;
@@ -46,7 +46,7 @@ function databaseUpdatePost(id, title, body, author) {
 }
 
 // D - Delete
-function databaseDeletePost(id) {
+async function databaseDeletePost(id) {
   let isFound = false;
 
   for (let i = 0; i < posts.length; i++) {

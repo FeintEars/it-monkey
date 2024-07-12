@@ -5,16 +5,16 @@ import {
   serviceDeleteUser,
 } from "../service/user.js";
 
-function controllerCreateUser(FirstName, LastName, age) {
+async function controllerCreateUser(FirstName, LastName, age) {
   return serviceCreateUser(FirstName, LastName, age);
 }
 
-function controllerReadUser(id) {
+async function controllerReadUser(id) {
   return serviceReadUser(id);
 }
 
-function controllerUpdateUser(id, FirstName, LastName, age) {
-  const updateUser = serviceUpdateUser(id, FirstName, LastName, age);
+async function controllerUpdateUser(id, FirstName, LastName, age) {
+  const updateUser = await serviceUpdateUser(id, FirstName, LastName, age);
 
   if (updateUser === null) {
     console.log("User not found.");
@@ -24,7 +24,7 @@ function controllerUpdateUser(id, FirstName, LastName, age) {
   return updateUser;
 }
 
-function controllerDeleteUser(id) {
+async function controllerDeleteUser(id) {
   return serviceDeleteUser(id);
 }
 

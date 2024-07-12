@@ -5,15 +5,15 @@ import {
   serviceDeletePost,
 } from "../service/post.js";
 
-function controllerCreatePost(title, body, author) {
+async function controllerCreatePost(title, body, author) {
   return serviceCreatePost(title, body, author);
 }
 
-function controllerReadPost(id) {
+async function controllerReadPost(id) {
   return serviceReadPost(id);
 }
 
-function controllerUpdatePost(id, title, body) {
+async function controllerUpdatePost(id, title, body) {
   const updatePost = serviceUpdatePost(id, title, body);
 
   if (updatePost === null) {
@@ -24,7 +24,7 @@ function controllerUpdatePost(id, title, body) {
   return updatePost;
 }
 
-function controllerDeletePost(id) {
+async function controllerDeletePost(id) {
   return serviceDeletePost(id);
 }
 
