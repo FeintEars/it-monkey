@@ -11,9 +11,9 @@ class Post extends Entity {
 }
 
 const posts = [
-  new Post("Title 1", "Body 1", databaseReadUser(1)),
-  new Post("Title 2", "Body 2", databaseReadUser(1)),
-  new Post("Title 3", "Body 3", databaseReadUser(2)),
+  new Post("Title 1", "Body 1", await databaseReadUser(1)),
+  new Post("Title 2", "Body 2", await databaseReadUser(1)),
+  new Post("Title 3", "Body 3", await databaseReadUser(2)),
 ];
 console.log(posts);
 
@@ -33,7 +33,6 @@ async function databaseReadPost(id) {
       return posts[i];
     }
   }
-
   return null;
 }
 

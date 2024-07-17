@@ -7,18 +7,6 @@ import {
 
 // C - Create
 async function controllerCreatePost(title, body, author) {
-  const indexOfSpace = author.indexOf(" ");
-  if (
-    indexOfSpace === -1 ||
-    indexOfSpace === 0 ||
-    indexOfSpace === author.length - 1
-  ) {
-    console.log(
-      "Author must have a first name and a last name separated by a space.",
-    );
-    return null;
-  }
-
   return serviceCreatePost(title, body, author);
 }
 
