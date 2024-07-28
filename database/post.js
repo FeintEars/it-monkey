@@ -1,27 +1,26 @@
-import { databaseReadUser } from "./user.js";
 import { Entity } from "./entity.js";
 
 class Post extends Entity {
-  constructor(title, body, author) {
+  constructor(title, body, authorId) {
     super();
     this.title = title;
     this.body = body;
-    this.author = author;
+    this.authorId = authorId;
   }
 }
 
 const posts = [
-  new Post("Title 1", "Body 1", await databaseReadUser(1)),
-  new Post("Title 2", "Body 2", await databaseReadUser(1)),
-  new Post("Title 3", "Body 3", await databaseReadUser(2)),
+  new Post("Title 1", "Body 1", 1),
+  new Post("Title 2", "Body 2", 1),
+  new Post("Title 3", "Body 3", 2),
 ];
 console.log(posts);
 
 // CRUD operations
 
 // C - Create
-async function databaseCreatePost(title, body, author) {
-  const post = new Post(title, body, author);
+async function databaseCreatePost(title, body, authorId) {
+  const post = new Post(title, body, authorId);
   posts.push(post);
   return post;
 }
@@ -37,12 +36,12 @@ async function databaseReadPost(id) {
 }
 
 // U - Update
-async function databaseUpdatePost(id, title, body, author) {
+async function databaseUpdatePost(id, title, body, authorId) {
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       posts[i].title = title;
       posts[i].body = body;
-      posts[i].author = author;
+      posts[i].authorId = authorId;
       return posts[i];
     }
   }
