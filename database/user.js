@@ -70,6 +70,7 @@ async function databaseDeleteUser(id) {
 }
 
 export {
+  User,
   databaseCreateUser,
   databaseReadUser,
   databaseUpdateUser,

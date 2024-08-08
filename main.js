@@ -43,12 +43,16 @@ app.post("/user", async (req, res) => {
 });
 
 app.post("/post", async (req, res) => {
-  const title = req.body.title;
-  const body = req.body.body;
-  const authorId = req.body.authorId;
-  const author = await controllerReadUser(authorId);
-  const post = await controllerCreatePost(title, body, author);
-  res.send(post);
+  try {
+    const title = req.body.title;
+    const body = req.body.body;
+    const authorId = req.body.authorId;
+    const author = await controllerReadUser(authorId);
+    const post = await controllerCreatePost(title, body, author);
+    res.send(post);
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.put("/user/:id", async (req, res) => {

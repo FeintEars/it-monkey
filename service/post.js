@@ -5,13 +5,17 @@ import {
   databaseDeletePost,
 } from "../database/post.js";
 
-import { databaseReadUser } from "../database/user.js";
+import { databaseReadUser, User } from "../database/user.js";
 
 // C - Create
 async function serviceCreatePost(title, body, author) {
-  const post = await databaseCreatePost(title, body, author.id);
-  post.author = await databaseReadUser(author.id);
-  return post;
+  if (author instanceof User) {
+    const post = await databaseCreatePost(title, body, author.id);
+    post.author = await databaseReadUser(author.id);
+    return post;
+  } else {
+    throw new Error("Author is not an instance of User");
+  }
 }
 
 // R - Read
