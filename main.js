@@ -13,6 +13,7 @@ import {
 } from "./controller/user.js";
 
 import express from "express";
+import { NotUserError } from "./error.js";
 const app = express();
 const port = 3000;
 
@@ -51,7 +52,11 @@ app.post("/post", async (req, res) => {
     const post = await controllerCreatePost(title, body, author);
     res.send(post);
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    if (error instanceof NotUserError) {
+      res.status(400).send({ error: "User is not found by authorId" });
+    } else {
+      res.status(400).send({ error: error.message });
+    }
   }
 });
 

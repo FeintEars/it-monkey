@@ -7,6 +7,8 @@ import {
 
 import { databaseReadUser, User } from "../database/user.js";
 
+import { NotUserError } from "../error.js";
+
 // C - Create
 async function serviceCreatePost(title, body, author) {
   if (author instanceof User) {
@@ -14,7 +16,7 @@ async function serviceCreatePost(title, body, author) {
     post.author = await databaseReadUser(author.id);
     return post;
   } else {
-    throw new Error("Author is not an instance of User");
+    throw new NotUserError();
   }
 }
 
