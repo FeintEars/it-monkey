@@ -5,6 +5,8 @@ import {
   databaseDeleteUser,
 } from "../database/user.js";
 
+import { UserNotFoundError } from "../errors.js";
+
 // C - Create
 async function serviceCreateUser(firstName, lastName, age) {
   return databaseCreateUser(firstName, lastName, age);
@@ -12,7 +14,11 @@ async function serviceCreateUser(firstName, lastName, age) {
 
 // R - Read
 async function serviceReadUser(id) {
-  return databaseReadUser(id);
+  const result = await databaseReadUser(id);
+  if (result === null) {
+    throw new UserNotFoundError(id);
+  }
+  return result;
 }
 
 // U - Update

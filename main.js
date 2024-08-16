@@ -13,7 +13,7 @@ import {
 } from "./controller/user.js";
 
 import express from "express";
-import { NotUserError } from "./error.js";
+import { NotUserError } from "./errors.js";
 const app = express();
 const port = 3000;
 
@@ -24,15 +24,23 @@ app.get("/", (req, res) => {
 app.use(express.json());
 
 app.get("/user/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const user = await controllerReadUser(id);
-  res.send(user);
+  try {
+    const id = parseInt(req.params.id);
+    const user = await controllerReadUser(id);
+    res.send(user);
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.get("/post/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const post = await controllerReadPost(id);
-  res.send(post);
+  try {
+    const id = parseInt(req.params.id);
+    const post = await controllerReadPost(id);
+    res.send(post);
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.post("/user", async (req, res) => {

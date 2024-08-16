@@ -7,7 +7,7 @@ import {
 
 import { databaseReadUser, User } from "../database/user.js";
 
-import { NotUserError } from "../error.js";
+import { NotUserError, PostNotFoundEroor } from "../errors.js";
 
 // C - Create
 async function serviceCreatePost(title, body, author) {
@@ -23,6 +23,9 @@ async function serviceCreatePost(title, body, author) {
 // R - Read
 async function serviceReadPost(id) {
   const post = await databaseReadPost(id);
+  if (post === null) {
+    throw new PostNotFoundEroor(id);
+  }
   post.author = await databaseReadUser(post.authorId);
   return post;
 }

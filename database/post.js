@@ -10,9 +10,9 @@ class Post extends Entity {
 }
 
 const posts = [
-  new Post("Title 1", "Body 1", 1),
-  new Post("Title 2", "Body 2", 1),
-  new Post("Title 3", "Body 3", 2),
+  new Post("Title 1", "Body 1", 4),
+  new Post("Title 2", "Body 2", 5),
+  new Post("Title 3", "Body 3", 6),
 ];
 console.log(posts);
 
