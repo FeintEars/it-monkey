@@ -69,34 +69,50 @@ app.post("/post", async (req, res) => {
 });
 
 app.put("/user/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const age = req.body.age;
-  const user = await controllerUpdateUser(id, firstName, lastName, age);
-  res.send(user);
+  try {
+    const id = parseInt(req.params.id);
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const age = req.body.age;
+    const user = await controllerUpdateUser(id, firstName, lastName, age);
+    res.send(user);
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.put("/post/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  const title = req.body.title;
-  const body = req.body.body;
-  const post = await controllerReadPost(id);
-  const author = post.author;
-  const post2 = await controllerUpdatePost(id, title, body, author);
-  res.send(post2);
+  try {
+    const id = parseInt(req.params.id);
+    const title = req.body.title;
+    const body = req.body.body;
+    const post = await controllerReadPost(id);
+    const author = post.author;
+    const post2 = await controllerUpdatePost(id, title, body, author);
+    res.send(post2);
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.delete("/user/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  await controllerDeleteUser(id);
-  res.send({ status: "ok" });
+  try {
+    const id = parseInt(req.params.id);
+    await controllerDeleteUser(id);
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.delete("/post/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
-  await controllerDeletePost(id);
-  res.send({ status: "ok" });
+  try {
+    const id = parseInt(req.params.id);
+    await controllerDeletePost(id);
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.post("/user", (req, res) => {

@@ -67,6 +67,7 @@ async function databaseDeleteUser(id) {
   if (isFound) {
     users.pop();
   }
+  return isFound;
 }
 
 export {

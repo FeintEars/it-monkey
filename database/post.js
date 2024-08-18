@@ -66,6 +66,7 @@ async function databaseDeletePost(id) {
   if (isFound) {
     posts.pop();
   }
+  return isFound;
 }
 
 export {

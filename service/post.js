@@ -7,7 +7,11 @@ import {
 
 import { databaseReadUser, User } from "../database/user.js";
 
-import { NotUserError, PostNotFoundEroor } from "../errors.js";
+import {
+  NotUserError,
+  PostNotFoundEroor,
+  PostNotDeletedErorr,
+} from "../errors.js";
 
 // C - Create
 async function serviceCreatePost(title, body, author) {
@@ -40,7 +44,11 @@ async function serviceUpdatePost(id, title, body) {
 
 // D - Delete
 async function serviceDeletePost(id) {
-  return databaseDeletePost(id);
+  const result = await databaseDeletePost(id);
+  if (!result) {
+    throw new PostNotDeletedErorr();
+  }
+  return result;
 }
 
 export {

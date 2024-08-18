@@ -19,4 +19,24 @@ class PostNotFoundEroor extends Error {
   }
 }
 
-export { NotUserError, UserNotFoundError, PostNotFoundEroor };
+class UserNotDeletedErorr extends Error {
+  constructor() {
+    super(`The user you are trying to delete was not found`);
+    this.name = `user-not-delete`;
+  }
+}
+
+class PostNotDeletedErorr extends Error {
+  constructor() {
+    super(`The post you are trying to delete was not found`);
+    this.name = `post-not-delete`;
+  }
+}
+
+export {
+  NotUserError,
+  UserNotFoundError,
+  PostNotFoundEroor,
+  UserNotDeletedErorr,
+  PostNotDeletedErorr,
+};
