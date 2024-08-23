@@ -12,6 +12,8 @@ import {
   controllerDeleteUser,
 } from "./controller/user.js";
 
+import { validateUser } from "./database/user.js";
+
 import express from "express";
 import { NotUserError } from "./errors.js";
 const app = express();
@@ -43,7 +45,7 @@ app.get("/post/:id", async (req, res) => {
   }
 });
 
-app.post("/user", async (req, res) => {
+app.post("/user", validateUser, async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const age = req.body.age;

@@ -1,4 +1,7 @@
+import { IsNotEmpty, IsString, IsOptional, IsNumber } from "class-validator";
 import { Entity } from "./entity.js";
+import { plainToInstance } from "class-transformer";
+import { validate } from "class-validator";
 
 class User extends Entity {
   constructor(firstName, lastName, age) {
@@ -7,7 +10,36 @@ class User extends Entity {
     this.lastName = lastName;
     this.age = age;
   }
+
+  @IsNotEmpty({ message: "First name is required" })
+  @IsString({ message: "First name must be a string" })
+  firstName;
+
+  @IsNotEmpty({ message: "Last name is required" })
+  @IsString({ message: "Last name must be a string" })
+  lastName;
+
+  @IsOptional()
+  @IsNumber({}, { message: "Age must be a number" })
+  age;
 }
+
+// Middleware to validate an instance of the User class
+const validateUser = async (req, res, next) => {
+  const userInstance = plainToInstance(User, req.body); // Transform plain object to User class instance
+  const errors = await validate(userInstance); // Perform validation
+
+  if (errors.length > 0) {
+    const errorMessages = errors
+      .map((err) => Object.values(err.constraints))
+      .join(", ");
+    return res.status(400).send({ error: errorMessages }); // Return validation errors
+  }
+
+  req.userInstance = userInstance; // Pass the validated instance to the next middleware
+  next();
+};
+
 const users = [
   new User("John", "Doe", 31),
   new User("Bill", "Gates", 25),
@@ -72,6 +104,7 @@ async function databaseDeleteUser(id) {
 
 export {
   User,
+  validateUser,
   databaseCreateUser,
   databaseReadUser,
   databaseUpdateUser,
