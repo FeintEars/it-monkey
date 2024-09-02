@@ -19,41 +19,41 @@ import { NotUserError } from "./errors.js";
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
+app.get("/", (req: any, res: any) => {
   res.send("Hello World!");
 });
 
 app.use(express.json());
 
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
     const user = await controllerReadUser(id);
     res.send(user);
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
-app.get("/post/:id", async (req, res) => {
+app.get("/post/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
     const post = await controllerReadPost(id);
     res.send(post);
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
-app.post("/user", validateUser, async (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const age = req.body.age;
+app.post("/user", validateUser, async (req: any, res: any) => {
+  const firstName: string = req.body.firstName;
+  const lastName: string = req.body.lastName;
+  const age: number = req.body.age;
   const user = await controllerCreateUser(firstName, lastName, age);
   res.send(user);
 });
 
-app.post("/post", async (req, res) => {
+app.post("/post", async (req: any, res: any) => {
   try {
     const title = req.body.title;
     const body = req.body.body;
@@ -61,7 +61,7 @@ app.post("/post", async (req, res) => {
     const author = await controllerReadUser(authorId);
     const post = await controllerCreatePost(title, body, author);
     res.send(post);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof NotUserError) {
       res.status(400).send({ error: "User is not found by authorId" });
     } else {
@@ -70,7 +70,7 @@ app.post("/post", async (req, res) => {
   }
 });
 
-app.put("/user/:id", async (req, res) => {
+app.put("/user/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
     const firstName = req.body.firstName;
@@ -78,46 +78,44 @@ app.put("/user/:id", async (req, res) => {
     const age = req.body.age;
     const user = await controllerUpdateUser(id, firstName, lastName, age);
     res.send(user);
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
-app.put("/post/:id", async (req, res) => {
+app.put("/post/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
     const title = req.body.title;
     const body = req.body.body;
-    const post = await controllerReadPost(id);
-    const author = post.author;
-    const post2 = await controllerUpdatePost(id, title, body, author);
-    res.send(post2);
-  } catch (error) {
+    const post = await controllerUpdatePost(id, title, body);
+    res.send(post);
+  } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
-app.delete("/user/:id", async (req, res) => {
+app.delete("/user/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
     await controllerDeleteUser(id);
     res.send({ status: "ok" });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
-app.delete("/post/:id", async (req, res) => {
+app.delete("/post/:id", async (req: any, res: any) => {
   try {
     const id = parseInt(req.params.id);
     await controllerDeletePost(id);
     res.send({ status: "ok" });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
-app.post("/user", (req, res) => {
+app.post("/user", (req: any, res: any) => {
   console.log("Headrs:");
   console.log(req.headrs);
 

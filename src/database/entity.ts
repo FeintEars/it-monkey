@@ -1,4 +1,5 @@
 class Entity {
+  id: number;
   static counter = 0;
   static generateId() {
     Entity.counter++;
