@@ -11,17 +11,19 @@ class User extends Entity {
     this.age = age;
   }
 
+  /*
   @IsNotEmpty({ message: "First name is required" })
   @IsString({ message: "First name must be a string" })
-  firstName;
+  firstName: string;
 
   @IsNotEmpty({ message: "Last name is required" })
   @IsString({ message: "Last name must be a string" })
-  lastName;
+  lastName: string;
 
   @IsOptional()
   @IsNumber({}, { message: "Age must be a number" })
-  age;
+  age: number;
+  */
 }
 
 // Middleware to validate an instance of the User class
