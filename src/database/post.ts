@@ -1,7 +1,11 @@
 import { Entity } from "./entity.js";
 
 class Post extends Entity {
-  constructor(title, body, authorId) {
+  title: string;
+  body: string;
+  authorId: number;
+  author: any;
+  constructor(title: string, body: string, authorId: number) {
     super();
     this.title = title;
     this.body = body;
@@ -19,14 +23,18 @@ console.log(posts);
 // CRUD operations
 
 // C - Create
-async function databaseCreatePost(title, body, authorId) {
+async function databaseCreatePost(
+  title: string,
+  body: string,
+  authorId: number,
+) {
   const post = new Post(title, body, authorId);
   posts.push(post);
   return post;
 }
 
 // R - Read
-async function databaseReadPost(id) {
+async function databaseReadPost(id: number): Promise<any> {
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       return posts[i];
@@ -36,7 +44,12 @@ async function databaseReadPost(id) {
 }
 
 // U - Update
-async function databaseUpdatePost(id, title, body, authorId) {
+async function databaseUpdatePost(
+  id: number,
+  title: string,
+  body: string,
+  authorId: number,
+) {
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       posts[i].title = title;
@@ -50,7 +63,7 @@ async function databaseUpdatePost(id, title, body, authorId) {
 }
 
 // D - Delete
-async function databaseDeletePost(id) {
+async function databaseDeletePost(id: number) {
   let isFound = false;
 
   for (let i = 0; i < posts.length; i++) {
