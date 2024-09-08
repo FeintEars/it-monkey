@@ -10,7 +10,7 @@ import { databaseReadUser, User } from "../database/user.js";
 import { NotUserError, PostNotFoundEroor } from "../errors.js";
 
 // C - Create
-async function serviceCreatePost(title, body, author) {
+async function serviceCreatePost(title: string, body: string, author: any) {
   if (author instanceof User) {
     const post = await databaseCreatePost(title, body, author.id);
     post.author = await databaseReadUser(author.id);
@@ -21,7 +21,7 @@ async function serviceCreatePost(title, body, author) {
 }
 
 // R - Read
-async function serviceReadPost(id) {
+async function serviceReadPost(id: number) {
   const post = await databaseReadPost(id);
   if (post === null) {
     throw new PostNotFoundEroor(id);
@@ -31,7 +31,7 @@ async function serviceReadPost(id) {
 }
 
 // U - Update
-async function serviceUpdatePost(id, title, body) {
+async function serviceUpdatePost(id: number, title: string, body: string) {
   let post = await databaseReadPost(id);
   post = await databaseUpdatePost(id, title, body, post.authorId);
   post.author = await databaseReadUser(post.authorId);
@@ -39,7 +39,7 @@ async function serviceUpdatePost(id, title, body) {
 }
 
 // D - Delete
-async function serviceDeletePost(id) {
+async function serviceDeletePost(id: number) {
   return databaseDeletePost(id);
 }
 

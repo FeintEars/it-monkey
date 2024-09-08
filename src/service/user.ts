@@ -8,12 +8,16 @@ import {
 import { UserNotFoundError } from "../errors.js";
 
 // C - Create
-async function serviceCreateUser(firstName, lastName, age) {
+async function serviceCreateUser(
+  firstName: string,
+  lastName: string,
+  age: number,
+) {
   return databaseCreateUser(firstName, lastName, age);
 }
 
 // R - Read
-async function serviceReadUser(id) {
+async function serviceReadUser(id: number) {
   const result = await databaseReadUser(id);
   if (result === null) {
     throw new UserNotFoundError(id);
@@ -22,12 +26,17 @@ async function serviceReadUser(id) {
 }
 
 // U - Update
-async function serviceUpdateUser(id, firstName, lastName, age) {
+async function serviceUpdateUser(
+  id: number,
+  firstName: string,
+  lastName: string,
+  age: number,
+) {
   return databaseUpdateUser(id, firstName, lastName, age);
 }
 
 // D - Delete
-async function serviceDeleteUser(id) {
+async function serviceDeleteUser(id: number) {
   return databaseDeleteUser(id);
 }
 
