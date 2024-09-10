@@ -1,7 +1,10 @@
 import { Entity } from "./entity.js";
 
 class User extends Entity {
-  constructor(firstName, lastName, age) {
+  firstName: string;
+  lastName: string;
+  age: number;
+  constructor(firstName: string, lastName: string, age: number) {
     super();
     this.firstName = firstName;
     this.lastName = lastName;
@@ -19,14 +22,18 @@ console.log(users);
 // CRUD operations
 
 // C - Create
-async function databaseCreateUser(firstName, lastName, age) {
+async function databaseCreateUser(
+  firstName: string,
+  lastName: string,
+  age: number,
+) {
   const user = new User(firstName, lastName, age);
   users.push(user);
   return user;
 }
 
 // R - Read
-async function databaseReadUser(id) {
+async function databaseReadUser(id: number) {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id === id) {
       return users[i];
@@ -37,7 +44,12 @@ async function databaseReadUser(id) {
 }
 
 // U - Update
-async function databaseUpdateUser(id, firstName, lastName, age) {
+async function databaseUpdateUser(
+  id: number,
+  firstName: string,
+  lastName: string,
+  age: number,
+) {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id === id) {
       users[i].firstName = firstName;
@@ -51,7 +63,7 @@ async function databaseUpdateUser(id, firstName, lastName, age) {
 }
 
 // D - Delete
-async function databaseDeleteUser(id) {
+async function databaseDeleteUser(id: number) {
   let isFound = false;
 
   for (let i = 0; i < users.length; i++) {
