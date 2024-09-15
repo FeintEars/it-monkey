@@ -1,3 +1,4 @@
+import { User } from "../database/user.js";
 import {
   serviceCreatePost,
   serviceReadPost,
@@ -6,7 +7,7 @@ import {
 } from "../service/post.js";
 
 // C - Create
-async function controllerCreatePost(title: string, body: string, author: any) {
+async function controllerCreatePost(title: string, body: string, author: User) {
   return serviceCreatePost(title, body, author);
 }
 

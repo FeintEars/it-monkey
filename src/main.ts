@@ -1,17 +1,3 @@
-/*
-string
-number
-boolean
-null
-object
-bigint
-undefined
-symbol
-
-any
-
-*/
-
 import {
   controllerCreatePost,
   controllerReadPost,
@@ -26,18 +12,19 @@ import {
   controllerDeleteUser,
 } from "./controller/user.js";
 
+import { Request, Response } from "express";
 import express from "express";
 import { NotUserError } from "./errors.js";
 const app = express();
 const port = 3000;
 
-app.get("/", (req: any, res: any) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
 app.use(express.json());
 
-app.get("/user/:id", async (req: any, res: any) => {
+app.get("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const user = await controllerReadUser(id);
@@ -47,7 +34,7 @@ app.get("/user/:id", async (req: any, res: any) => {
   }
 });
 
-app.get("/post/:id", async (req: any, res: any) => {
+app.get("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const post = await controllerReadPost(id);
@@ -57,7 +44,7 @@ app.get("/post/:id", async (req: any, res: any) => {
   }
 });
 
-app.post("/user", async (req: any, res: any) => {
+app.post("/user", async (req: Request, res: Response) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const age = req.body.age;
@@ -65,7 +52,7 @@ app.post("/user", async (req: any, res: any) => {
   res.send(user);
 });
 
-app.post("/post", async (req: any, res: any) => {
+app.post("/post", async (req: Request, res: Response) => {
   try {
     const title = req.body.title;
     const body = req.body.body;
@@ -82,7 +69,7 @@ app.post("/post", async (req: any, res: any) => {
   }
 });
 
-app.put("/user/:id", async (req: any, res: any) => {
+app.put("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const firstName = req.body.firstName;
@@ -95,7 +82,7 @@ app.put("/user/:id", async (req: any, res: any) => {
   }
 });
 
-app.put("/post/:id", async (req: any, res: any) => {
+app.put("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const title = req.body.title;
@@ -107,7 +94,7 @@ app.put("/post/:id", async (req: any, res: any) => {
   }
 });
 
-app.delete("/user/:id", async (req: any, res: any) => {
+app.delete("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     await controllerDeleteUser(id);
@@ -117,7 +104,7 @@ app.delete("/user/:id", async (req: any, res: any) => {
   }
 });
 
-app.delete("/post/:id", async (req: any, res: any) => {
+app.delete("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     await controllerDeletePost(id);
@@ -127,9 +114,9 @@ app.delete("/post/:id", async (req: any, res: any) => {
   }
 });
 
-app.post("/user", (req: any, res: any) => {
+app.post("/user", (req: Request, res: Response) => {
   console.log("Headrs:");
-  console.log(req.headrs);
+  console.log(req.headers);
 
   console.log("Query parametrs:");
   console.log(req.query);
