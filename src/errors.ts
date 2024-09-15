@@ -12,11 +12,11 @@ class UserNotFoundError extends Error {
   }
 }
 
-class PostNotFoundEroor extends Error {
+class PostNotFoundError extends Error {
   constructor(id: number) {
     super(`Post ${id} not found`);
     this.name = `post-not-found`;
   }
 }
 
-export { NotUserError, UserNotFoundError, PostNotFoundEroor };
+export { NotUserError, UserNotFoundError, PostNotFoundError };
