@@ -4,14 +4,10 @@ import {
   serviceUpdatePost,
   serviceDeletePost,
 } from "../service/post.js";
+import { User } from "../database/user.js";
 
 // C - Create
-async function controllerCreatePost(
-  title: string,
-  body: string,
-  author: string,
-
-) {
+async function controllerCreatePost(title: string, body: string, author: User) {
   return serviceCreatePost(title, body, author);
 }
 

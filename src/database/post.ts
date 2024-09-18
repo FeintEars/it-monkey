@@ -1,10 +1,11 @@
 import { Entity } from "./entity.js";
+import { User } from "./user.js";
 
 class Post extends Entity {
   title: string;
   body: string;
   authorId: number;
-  author: any;
+  author?: User | null;
   constructor(title: string, body: string, authorId: number) {
     super();
     this.title = title;
@@ -34,7 +35,7 @@ async function databaseCreatePost(
 }
 
 // R - Read
-async function databaseReadPost(id: number): Promise<any> {
+async function databaseReadPost(id: number) {
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === id) {
       return posts[i];

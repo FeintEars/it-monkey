@@ -5,7 +5,7 @@ import {
   databaseDeleteUser,
 } from "../database/user.js";
 
-import { UserNotFoundError, UserNotDeletedErorr } from "../errors.js";
+import { UserNotFoundError, UserNotDeletedError } from "../errors.js";
 
 // C - Create
 async function serviceCreateUser(
@@ -43,7 +43,7 @@ async function serviceUpdateUser(
 async function serviceDeleteUser(id: number) {
   const result = await databaseDeleteUser(id);
   if (!result) {
-    throw new UserNotDeletedErorr();
+    throw new UserNotDeletedError();
   }
   return result;
 }
