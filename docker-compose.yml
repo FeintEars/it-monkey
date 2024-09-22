@@ -1,0 +1,26 @@
+version: '3'
+networks:
+  default:
+    name: itmonkey_network
+services:
+  itmonkey_postgres:
+    hostname: itmonkey_postgres
+    container_name: itmonkey_postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: itmonkey
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
+    networks:
+      - default
+  itmonkey_postgres_adminer:
+    container_name: itmonkey_postgres_adminer
+    image: adminer:latest
+    ports:
+      - 5431:8080
+    networks:
+      - default
+    depends_on:
+      - itmonkey_postgres
