@@ -1,136 +1,66 @@
-import {
-  controllerCreatePost,
-  controllerReadPost,
-  controllerUpdatePost,
-  controllerDeletePost,
-} from "./controller/post.js";
-
-import {
-  controllerCreateUser,
-  controllerReadUser,
-  controllerUpdateUser,
-  controllerDeleteUser,
-} from "./controller/user.js";
-
 import express from "express";
-import { Request, Response } from "express";
-import { NotUserError } from "./errors.js";
+import pool from "./db";
 
 const app = express();
-const port = 3000;
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
-
 app.use(express.json());
 
-app.get("/user/:id", async (req: Request, res: Response) => {
+// Отримати всі пости
+app.get("/posts", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const user = await controllerReadUser(id);
-    res.send(user);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
+    const posts = await pool.query(`
+      SELECT p.id, p.title, p.body, u.firstname, u.lastname
+      FROM "Posts" p
+      JOIN "Users" u ON p."authorId" = u.id
+    `);
+    res.json(posts.rows);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send("Server error");
   }
 });
 
-app.get("/post/:id", async (req: Request, res: Response) => {
+// Створити новий пост
+app.post("/posts", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const post = await controllerReadPost(id);
-    res.send(post);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
+    const { title, body, authorId } = req.body;
+    const newPost = await pool.query(
+      'INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *',
+      [title, body, authorId]
+    );
+    res.json(newPost.rows[0]);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send("Server error");
   }
 });
 
-app.post("/user", async (req: Request, res: Response) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const age = req.body.age;
-  const user = await controllerCreateUser(firstName, lastName, age);
-  res.send(user);
-});
-
-app.post("/post", async (req: Request, res: Response) => {
+// Отримати всіх користувачів
+app.get("/users", async (req, res) => {
   try {
-    const title = req.body.title;
-    const body = req.body.body;
-    const authorId = req.body.authorId;
-    const author = await controllerReadUser(authorId);
-    const post = await controllerCreatePost(title, body, author);
-    res.send(post);
-  } catch (error: any) {
-    if (error instanceof NotUserError) {
-      res.status(400).send({ error: "User is not found by authorId" });
-    } else {
-      res.status(400).send({ error: error.message });
-    }
+    const users = await pool.query('SELECT * FROM "Users"');
+    res.json(users.rows);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send("Server error");
   }
 });
 
-app.put("/user/:id", async (req: Request, res: Response) => {
+// Створити нового користувача
+app.post("/users", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const age = req.body.age;
-    const user = await controllerUpdateUser(id, firstName, lastName, age);
-    res.send(user);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
+    const { firstname, lastname, age } = req.body;
+    const newUser = await pool.query(
+      'INSERT INTO "Users" ("firstname", "lastname", "age") VALUES ($1, $2, $3) RETURNING *',
+      [firstname, lastname, age]
+    );
+    res.json(newUser.rows[0]);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send("Server error");
   }
 });
 
-app.put("/post/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    const title = req.body.title;
-    const body = req.body.body;
-    const post = await controllerUpdatePost(id, title, body);
-    res.send(post);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
-
-app.delete("/user/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    await controllerDeleteUser(id);
-    res.send({ status: "ok" });
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
-
-app.delete("/post/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    await controllerDeletePost(id);
-    res.send({ status: "ok" });
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
-
-app.post("/user", (req: Request, res: Response) => {
-  console.log("Headrs:");
-  console.log(req.headers);
-
-  console.log("Query parametrs:");
-  console.log(req.query);
-
-  console.log("Body");
-  console.log(req.body);
-
-  console.log("Params:");
-  console.log(req.params);
-
-  res.send("Create User!");
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+// Запуск сервера
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000");
 });
