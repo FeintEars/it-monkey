@@ -1,13 +1,8 @@
-import {
-  databaseCreateUser,
-  databaseReadUser,
-  databaseUpdateUser,
-  databaseDeleteUser,
-} from "../database/user.js";
-
 import { UserNotFoundError, UserNotDeletedError } from "../errors.js";
+import pool from "../db";
 
 // C - Create
+/*
 async function serviceCreateUser(
   firstName: string,
   lastName: string,
@@ -15,17 +10,24 @@ async function serviceCreateUser(
 ) {
   return databaseCreateUser(firstName, lastName, age);
 }
+*/
 
 // R - Read
 async function serviceReadUser(id: number) {
-  const result = await databaseReadUser(id);
-  if (result === null) {
+  const users = await pool.query(
+    'SELECT * FROM "Users" WHERE id = $1',
+    [id]
+  );
+
+  if (users.rowCount === 0) {
     throw new UserNotFoundError(id);
   }
-  return result;
+
+  return users.rows[0];
 }
 
 // U - Update
+/*
 async function serviceUpdateUser(
   id: number,
   firstName: string,
@@ -38,8 +40,10 @@ async function serviceUpdateUser(
   }
   return result;
 }
+*/
 
 // D - Delete
+/*
 async function serviceDeleteUser(id: number) {
   const result = await databaseDeleteUser(id);
   if (!result) {
@@ -47,10 +51,11 @@ async function serviceDeleteUser(id: number) {
   }
   return result;
 }
+*/
 
 export {
-  serviceCreateUser,
+  // serviceCreateUser,
   serviceReadUser,
-  serviceUpdateUser,
-  serviceDeleteUser,
+  // serviceUpdateUser,
+  // serviceDeleteUser,
 };
