@@ -1,80 +1,104 @@
-import express, { Request, Response } from "express";
-import pool from "./db";
+import { Request, Response } from "express";
+import {} from //controllerCreatePost,
+//controllerReadPost,
+//controllerUpdatePost,
+//controllerDeletePost,
+"./controller/post.js";
 
+import {
+  controllerCreateUser,
+  controllerReadUser,
+  //controllerUpdateUser,
+  //controllerDeleteUser,
+} from "./controller/user.js";
+
+import express from "express";
+import { NotUserError } from "./errors.js";
 const app = express();
+const port = 3000;
 
-// Додаємо middleware для обробки JSON
 app.use(express.json());
 
-// Типізація для користувача
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number | null; // Тип може бути або число, або null
-}
-
-// Типізація для посту
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  authorId: number;
-}
-
-// Маршрут для отримання всіх користувачів
-app.get("/users", async (req: Request, res: Response) => {
+app.get("/user/:id", async (req: Request, res: Response) => {
   try {
-    const result = await pool.query<User>('SELECT * FROM "Users"');
-    res.json(result.rows);
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    const id = parseInt(req.params.id);
+    const user = await controllerReadUser(id);
+    res.send(user);
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
   }
 });
 
-// Маршрут для створення нового користувача
-app.post("/users", async (req: Request, res: Response) => {
+/* app.get("/post/:id", async (req: Request, res: Response) => {
   try {
-    const { firstName, lastName, age } = req.body;
-    const newUser = await pool.query<User>(
-      'INSERT INTO "Users" ("firstName", "lastName", "age") VALUES ($1, $2, $3) RETURNING *',
-      [firstName, lastName, age],
-    );
-    res.json(newUser.rows[0]);
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    const id = parseInt(req.params.id);
+    const post = await controllerReadPost(id);
+    res.send(post);
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
   }
-});
-// Маршрут для отримання всіх постів
-app.get("/posts", async (req: Request, res: Response) => {
+});*/
+
+app.post("/user", async (req: Request, res: Response) => {
   try {
-    const result = await pool.query<Post>('SELECT * FROM "Posts"');
-    res.json(result.rows);
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const age = req.body.age;
+    const user = await controllerCreateUser(firstName, lastName, age);
+    res.send(user);
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
   }
 });
 
-// Маршрут для створення нового посту
-app.post("/posts", async (req: Request, res: Response) => {
+/* app.post("/post", async (req: Request, res: Response) => {
   try {
-    const { title, body, authorId } = req.body;
-    const newPost = await pool.query<Post>(
-      'INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *',
-      [title, body, authorId],
-    );
-    res.json(newPost.rows[0]);
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    const title = req.body.title;
+    const body = req.body.body;
+    const authorId = req.body.authorId;
+    const author = await controllerReadUser(authorId);
+    const post = await controllerCreatePost(title, body, author);
+    res.send(post);
+  } catch (error: any) {
+    if (error instanceof NotUserError) {
+      res.status(400).send({ error: "User is not found by authorId" });
+    } else {
+      res.status(400).send({ error: error.message });
+    }
   }
-});
+});*/
 
-// Запускаємо сервер
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+/*
+app.put("/user/:id", async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const age = req.body.age;
+  const user = await controllerUpdateUser(id, firstName, lastName, age);
+  res.send(user);
+});
+*/
+
+/*app.put("/post/:id", async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const title = req.body.title;
+  const body = req.body.body;
+  const post = await controllerUpdatePost(id, title, body);
+  res.send(post);
+});*/
+
+/*app.delete("/user/:id", async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  await controllerDeleteUser(id);
+  res.send({ status: "ok" });
+});*/
+
+/*app.delete("/post/:id", async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  await controllerDeletePost(id);
+  res.send({ status: "ok" });
+});*/
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
