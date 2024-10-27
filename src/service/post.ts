@@ -1,19 +1,5 @@
-import {
-  databaseCreatePost,
-  databaseReadPost,
-  databaseUpdatePost,
-  databaseDeletePost,
-} from "../database/post.js";
-
-import { databaseReadUser, User } from "../database/user.js";
-
-import {
-  NotUserError,
-  PostNotFoundError,
-  PostNotDeletedError,
-} from "../errors.js";
-
-// C - Create
+import pool from "../db";
+/*
 async function serviceCreatePost(title: string, body: string, author: User) {
   if (author instanceof User) {
     const post = await databaseCreatePost(title, body, author.id);
@@ -23,8 +9,8 @@ async function serviceCreatePost(title: string, body: string, author: User) {
     throw new NotUserError();
   }
 }
-
-// R - Read
+*/
+/*
 async function serviceReadPost(id: number) {
   const post = await databaseReadPost(id);
   if (post === null) {
@@ -33,8 +19,8 @@ async function serviceReadPost(id: number) {
   post.author = await databaseReadUser(post.authorId);
   return post;
 }
-
-// U - Update
+*/
+/*
 async function serviceUpdatePost(id: number, title: string, body: string) {
   let post = await databaseReadPost(id);
   if (post === null) {
@@ -47,8 +33,8 @@ async function serviceUpdatePost(id: number, title: string, body: string) {
   post.author = await databaseReadUser(post.authorId);
   return post;
 }
-
-// D - Delete
+*/
+/*
 async function serviceDeletePost(id: number) {
   const result = await databaseDeletePost(id);
   if (!result) {
@@ -56,10 +42,4 @@ async function serviceDeletePost(id: number) {
   }
   return result;
 }
-
-export {
-  serviceCreatePost,
-  serviceReadPost,
-  serviceUpdatePost,
-  serviceDeletePost,
-};
+*/
