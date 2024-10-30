@@ -35,10 +35,10 @@ async function controllerDeletePost(id: number) {
   return serviceDeletePost(id);
 }
 */
-/*
+
 export {
-  controllerCreatePost,
-  controllerReadPost,
-  controllerUpdatePost,
-  controllerDeletePost,
-}*/
+ // controllerCreatePost,
+  //controllerReadPost,
+//controllerUpdatePost,
+  //controllerDeletePost,
+}

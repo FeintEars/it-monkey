@@ -7,7 +7,7 @@ import {} from // controllerCreatePost,
 import {
   controllerCreateUser,
   controllerReadUser,
-  // controllerUpdateUser,
+  controllerUpdateUser,
   //controllerDeleteUser,
 } from "./controller/user.js";
 
@@ -71,7 +71,7 @@ app.post("/post", async (req: Request, res: Response) => {
   }
 });
 */
-/*
+
 app.put("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -84,7 +84,7 @@ app.put("/user/:id", async (req: Request, res: Response) => {
     res.status(400).send({ error: error.message });
   }
 });
-*/
+
 /*
 app.put("/post/:id", async (req: Request, res: Response) => {
   try {

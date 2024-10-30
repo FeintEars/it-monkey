@@ -1,7 +1,7 @@
 import {
   serviceCreateUser,
   serviceReadUser,
-  //serviceUpdateUser,
+  serviceUpdateUser,
   //serviceDeleteUser,
 } from "../service/user.js";
 
@@ -19,7 +19,7 @@ async function controllerCreateUser(
 async function controllerReadUser(id: number) {
   return serviceReadUser(id);
 }
-/*
+
 // U - Update
 async function controllerUpdateUser(
   id: number,
@@ -31,7 +31,7 @@ async function controllerUpdateUser(
 
   return updateUser;
 }
-*/
+
 /*
 // D - Delete
 async function controllerDeleteUser(id: number) {
@@ -41,6 +41,6 @@ async function controllerDeleteUser(id: number) {
 export {
   controllerCreateUser,
   controllerReadUser,
-  //controllerUpdateUser,
+  controllerUpdateUser,
   //controllerDeleteUser,
 };
