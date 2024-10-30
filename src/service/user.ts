@@ -24,15 +24,22 @@ async function serviceReadUser(id: number) {
 }
 
 // U - Update
-/*
+
 async function serviceUpdateUser(
   id: number,
   firstName: string,
   lastName: string,
   age: number,
 ) {
-  return databaseUpdateUser(id, firstName, lastName, age);
-}*/
+  const users = await pool.query(
+    'UPDATE "Users" SET "firstName" = $1, "lastName" = $2, "age" = $3 WHERE "id" = $4 RETURNING *',
+    [firstName, lastName, age, id],
+  );
+  if (users.rowCount === 0) {
+    throw new UserNotFoundError(id);
+  }
+  return users.rows[0];
+}
 
 // D - Delete
 /*
@@ -43,6 +50,6 @@ async function serviceDeleteUser(id: number) {
 export {
   serviceCreateUser,
   serviceReadUser,
-  //serviceUpdateUser,
+  serviceUpdateUser,
   //serviceDeleteUser,
 };

@@ -8,7 +8,7 @@ import {} from //controllerCreatePost,
 import {
   controllerCreateUser,
   controllerReadUser,
-  //controllerUpdateUser,
+  controllerUpdateUser,
   //controllerDeleteUser,
 } from "./controller/user.js";
 
@@ -68,16 +68,18 @@ app.post("/user", async (req: Request, res: Response) => {
   }
 });*/
 
-/*
 app.put("/user/:id", async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const age = req.body.age;
-  const user = await controllerUpdateUser(id, firstName, lastName, age);
-  res.send(user);
+  try {
+    const id = parseInt(req.params.id);
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const age = req.body.age;
+    const user = await controllerUpdateUser(id, firstName, lastName, age);
+    res.send(user);
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
+  }
 });
-*/
 
 /*app.put("/post/:id", async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
