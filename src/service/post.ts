@@ -13,15 +13,14 @@ async function serviceCreatePost(title: string, body: string, author: User) {
 }*/
 
 // R - Read
-/*
+
 async function serviceReadPost(id: number) {
-  const post = await databaseReadPost(id);
-  if (post === null) {
+  const posts = await pool.query('SELECT * FROM "Posts" WHERE id = $1', [id]);
+  if (posts.rowCount === 0) {
     throw new PostNotFoundError(id);
   }
-  post.author = await databaseReadUser(post.authorId);
-  return post;
-}*/
+  return posts.rows[0];
+}
 
 // U - Update
 /*
@@ -45,8 +44,9 @@ async function serviceDeletePost(id: number) {
   return databaseDeletePost(id);
 }*/
 
-export //serviceCreatePost,
-//serviceReadPost,
+export {
+//serviceCreatePost,
+serviceReadPost,
 //serviceUpdatePost,
 //serviceDeletePost,
- {};
+};

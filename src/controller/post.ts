@@ -1,8 +1,10 @@
-import {} from //serviceCreatePost,
-//serviceReadPost,
+import { 
+//serviceCreatePost,
+serviceReadPost,
 //serviceUpdatePost,
 //serviceDeletePost,
-"../service/post.js";
+}
+from "../service/post.js";
 
 // C - Create
 /*
@@ -11,10 +13,10 @@ async function controllerCreatePost(title: string, body: string, author: User) {
 }*/
 
 // R - Read
-/*
+
 async function controllerReadPost(id: number) {
   return serviceReadPost(id);
-}*/
+}
 
 // U - Update
 /*
@@ -35,8 +37,9 @@ async function controllerDeletePost(id: number) {
   return serviceDeletePost(id);
 }*/
 
-export //controllerCreatePost,
-//controllerReadPost,
+export {
+//controllerCreatePost,
+controllerReadPost,
 //controllerUpdatePost,
 //controllerDeletePost,
- {};
+ };

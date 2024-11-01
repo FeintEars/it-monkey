@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
-import {} from //controllerCreatePost,
-//controllerReadPost,
+import {
+//controllerCreatePost,
+controllerReadPost,
 //controllerUpdatePost,
 //controllerDeletePost,
-"./controller/post.js";
+}
+from "./controller/post.js";
 
 import {
   controllerCreateUser,
@@ -29,15 +31,16 @@ app.get("/user/:id", async (req: Request, res: Response) => {
   }
 });
 
-/* app.get("/post/:id", async (req: Request, res: Response) => {
+app.get("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const post = await controllerReadPost(id);
+    post.author = await controllerReadUser(post.authorId);
     res.send(post);
   } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
-});*/
+});
 
 app.post("/user", async (req: Request, res: Response) => {
   try {
