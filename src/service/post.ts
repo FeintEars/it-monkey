@@ -16,17 +16,16 @@ async function serviceCreatePost(title: string, body: string, author: User) {
   }
 }
 */
-/*
+
 // R - Read
 async function serviceReadPost(id: number) {
-  const post = await databaseReadPost(id);
-  if (post === null) {
+  const post = await pool.query('SELECT * FROM "Posts" WHERE id = $1', [id]);
+  if (post.rowCount === 0) {
     throw new PostNotFoundError(id);
   }
-  post.author = await databaseReadUser(post.authorId);
-  return post;
+  return post.rows[0];
 }
-*/
+
 /*
 // U - Update
 async function serviceUpdatePost(id: number, title: string, body: string) {
@@ -56,7 +55,7 @@ async function serviceDeletePost(id: number) {
 
 export {
   //serviceCreatePost,
- //serviceReadPost,
+ serviceReadPost,
   //serviceUpdatePost,
   //serviceDeletePost,
 };

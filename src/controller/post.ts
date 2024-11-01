@@ -1,8 +1,9 @@
-import {} from // serviceCreatePost,
-//serviceReadPost,
-//serviceUpdatePost,
-//serviceDeletePost,
-"../service/post.js";
+import {
+  //serviceCreatePost,
+  serviceReadPost,
+  //serviceUpdatePost,
+  //serviceDeletePost,
+  } from  "../service/post.js";
 
 /*
 // C - Create
@@ -10,12 +11,12 @@ async function controllerCreatePost(title: string, body: string, author: User) {
   return serviceCreatePost(title, body, author);
 }
 */
-/*
+
 // R - Read
 async function controllerReadPost(id: number) {
   return serviceReadPost(id);
 }
-*/
+
 /*
 // U - Update
 async function controllerUpdatePost(id: number, title: string, body: string) {
@@ -38,7 +39,7 @@ async function controllerDeletePost(id: number) {
 
 export {
  // controllerCreatePost,
-  //controllerReadPost,
+  controllerReadPost,
 //controllerUpdatePost,
   //controllerDeletePost,
 }
