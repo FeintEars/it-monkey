@@ -9,7 +9,7 @@ import {
   controllerCreateUser,
   controllerReadUser,
   controllerUpdateUser,
-  //controllerDeleteUser,
+  controllerDeleteUser,
 } from "./controller/user.js";
 
 import express from "express";
@@ -89,11 +89,15 @@ app.put("/user/:id", async (req: Request, res: Response) => {
   res.send(post);
 });*/
 
-/*app.delete("/user/:id", async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  await controllerDeleteUser(id);
-  res.send({ status: "ok" });
-});*/
+app.delete("/user/:id", async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    await controllerDeleteUser(id);
+    res.send({ status: "ok" });
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
+  }
+});
 
 /*app.delete("/post/:id", async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);

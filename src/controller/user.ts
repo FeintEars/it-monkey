@@ -2,7 +2,7 @@ import {
   serviceCreateUser,
   serviceReadUser,
   serviceUpdateUser,
-  //serviceDeleteUser,
+  serviceDeleteUser,
 } from "../service/user";
 
 // C - Create
@@ -40,14 +40,13 @@ async function controllerUpdateUser(
 
 // D - Delete
 
-/*
 async function controllerDeleteUser(id: number) {
-  return serviceDeleteUser(id);
-}*/
+  await serviceDeleteUser(id);
+}
 
 export {
   controllerCreateUser,
   controllerReadUser,
   controllerUpdateUser,
-  //controllerDeleteUser,
+  controllerDeleteUser,
 };
