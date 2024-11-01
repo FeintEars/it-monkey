@@ -39,20 +39,18 @@ async function serviceUpdateUser(
 }
 
 
-/*
+
 // D - Delete
-async function serviceDeleteUser(id: number) {
-  const result = await databaseDeleteUser(id);
-  if (!result) {
-    throw new UserNotDeletedError();
-  }
-  return result;
+async function serviceDeleteUser(id: number,) {
+  const users = await pool.query ('DELETE FROM "Users" WHERE id = $1', [id])
+  if (users.rowCount === 0) {
+    throw new UserNotFoundError(id);
 }
-*/
+}
 
 export {
   serviceCreateUser,
   serviceReadUser,
   serviceUpdateUser,
-  //serviceDeleteUser,
+  serviceDeleteUser,
 };

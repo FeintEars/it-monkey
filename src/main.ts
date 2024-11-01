@@ -8,7 +8,7 @@ import {
   controllerCreateUser,
   controllerReadUser,
   controllerUpdateUser,
-  //controllerDeleteUser,
+  controllerDeleteUser,
 } from "./controller/user.js";
 
 import express from "express";
@@ -99,7 +99,7 @@ app.put("/post/:id", async (req: Request, res: Response) => {
 });
 */
 
-/*
+
 app.delete("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -109,7 +109,7 @@ app.delete("/user/:id", async (req: Request, res: Response) => {
     res.status(400).send({ error: error.message });
   }
 });
-*/
+
 /*
 app.delete("/post/:id", async (req: Request, res: Response) => {
   try {
@@ -120,8 +120,8 @@ app.delete("/post/:id", async (req: Request, res: Response) => {
     res.status(400).send({ error: error.message });
   }
 });
-*/
 
+*/
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
