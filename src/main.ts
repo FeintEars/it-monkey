@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import {
-  //controllerCreatePost,
+  controllerCreatePost,
   controllerReadPost,
   //controllerUpdatePost,
   //controllerDeletePost,
@@ -53,7 +53,7 @@ app.post("/user", async (req: Request, res: Response) => {
   }
 });
 
-/* app.post("/post", async (req: Request, res: Response) => {
+ app.post("/post", async (req: Request, res: Response) => {
   try {
     const title = req.body.title;
     const body = req.body.body;
@@ -68,7 +68,7 @@ app.post("/user", async (req: Request, res: Response) => {
       res.status(400).send({ error: error.message });
     }
   }
-});*/
+});
 
 app.put("/user/:id", async (req: Request, res: Response) => {
   try {

@@ -1,17 +1,12 @@
 import { NotUserError, PostNotFoundError } from "../errors.js";
 import pool from "../db";
+type User = any;
 // C - Create
-/*
-async function serviceCreatePost(title: string, body: string, author: User) {
-  if (author instanceof User) {
-    const post = await databaseCreatePost(title, body, author.id);
-    post.author = await databaseReadUser(author.id);
-    return post;
-  } else {
-    throw new NotUserError();
-  }
-}*/
 
+async function serviceCreatePost(title: string, body: string, author: User, ) {
+ const result = await pool.query ( 'INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *', [title, body, author.id])
+ return result.rows [0]
+}
 // R - Read
 
 async function serviceReadPost(id: number) {
@@ -80,7 +75,7 @@ async function serviceDeletePost(id: number) {
 }*/
 
 export {
-  //serviceCreatePost,
+  serviceCreatePost,
   serviceReadPost,
   //serviceUpdatePost,
   //serviceDeletePost,
