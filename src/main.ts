@@ -1,5 +1,5 @@
 import {
-  //controllerCreatePost,
+  controllerCreatePost,
   controllerReadPost,
   // controllerUpdatePost,
   //controllerDeletePost,
@@ -54,14 +54,14 @@ app.post("/user", async (req: Request, res: Response) => {
   }
 });
 
-/*
+
 app.post("/post", async (req: Request, res: Response) => {
   try {
     const title = req.body.title;
     const body = req.body.body;
     const authorId = req.body.authorId;
-    const author = await controllerReadUser(authorId);
-    const post = await controllerCreatePost(title, body, author);
+    await controllerReadUser(authorId);
+    const post = await controllerCreatePost(title, body, authorId);
     res.send(post);
   } catch (error: any) {
     if (error instanceof NotUserError) {
@@ -71,7 +71,7 @@ app.post("/post", async (req: Request, res: Response) => {
     }
   }
 });
-*/
+
 
 app.put("/user/:id", async (req: Request, res: Response) => {
   try {
