@@ -3,7 +3,7 @@ import {
   serviceReadPost,
   //serviceUpdatePost,
   //serviceDeletePost,
-  } from  "../service/post.js";
+} from "../service/post.js";
 
 /*
 // C - Create
@@ -38,8 +38,8 @@ async function controllerDeletePost(id: number) {
 */
 
 export {
- // controllerCreatePost,
+  // controllerCreatePost,
   controllerReadPost,
-//controllerUpdatePost,
+  //controllerUpdatePost,
   //controllerDeletePost,
-}
+};

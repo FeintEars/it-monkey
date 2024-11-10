@@ -14,7 +14,6 @@ async function controllerCreateUser(
   return serviceCreateUser(firstName, lastName, age);
 }
 
-
 // R - Read
 async function controllerReadUser(id: number) {
   return serviceReadUser(id);
@@ -31,7 +30,6 @@ async function controllerUpdateUser(
 
   return updateUser;
 }
-
 
 // D - Delete
 async function controllerDeleteUser(id: number) {

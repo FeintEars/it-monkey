@@ -19,13 +19,45 @@ async function serviceCreatePost(title: string, body: string, author: User) {
 
 // R - Read
 async function serviceReadPost(id: number) {
-  const post = await pool.query('SELECT * FROM "Posts" WHERE id = $1', [id]);
-  if (post.rowCount === 0) {
+  const result = await pool.query(
+    `SELECT
+      u.*,   
+      p.* 
+      FROM 
+      "Posts" p
+      LEFT JOIN 
+      "Users" u ON p."authorId" = u."id"
+      WHERE 
+      p."id" = $1;`,[id],
+  );
+  if (result.rowCount === 0) {
     throw new PostNotFoundError(id);
   }
-  return post.rows[0];
-}
 
+  if (result.rows[0].firstName === null) {
+    return {
+      id: result.rows[0].id,
+      title: result.rows[0].title,
+      body: result.rows[0].body,
+      authorId: result.rows[0].authorId,
+      author: {
+        error: `User ${result.rows[0].authorId} not found`,
+      },
+    };
+  }
+  return {
+    id: result.rows[0].id,
+    title: result.rows[0].title,
+    body: result.rows[0].body,
+    authorId: result.rows[0].authorId,
+    author: {
+      id: result.rows[0].id,
+      firstName: result.rows[0].firstName,
+      lastName: result.rows[0].lastName,
+      age: result.rows[0].age,
+    },
+  };
+}
 /*
 // U - Update
 async function serviceUpdatePost(id: number, title: string, body: string) {
@@ -55,8 +87,7 @@ async function serviceDeletePost(id: number) {
 
 export {
   //serviceCreatePost,
- serviceReadPost,
+  serviceReadPost,
   //serviceUpdatePost,
   //serviceDeletePost,
 };
-

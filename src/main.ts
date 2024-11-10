@@ -1,7 +1,7 @@
 import {
   //controllerCreatePost,
   controllerReadPost,
- // controllerUpdatePost,
+  // controllerUpdatePost,
   //controllerDeletePost,
 } from "./controller/post.js";
 
@@ -35,7 +35,6 @@ app.get("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const post = await controllerReadPost(id);
-    post.author = await controllerReadUser(post.authorId);
     res.send(post);
   } catch (error: any) {
     res.status(400).send({ error: error.message });
@@ -50,7 +49,7 @@ app.post("/user", async (req: Request, res: Response) => {
     const user = await controllerCreateUser(firstName, lastName, age);
     res.send(user);
   } catch (error: any) {
-    console.log(error)
+    console.log(error);
     res.status(400).send({ error: error.message });
   }
 });
@@ -100,7 +99,6 @@ app.put("/post/:id", async (req: Request, res: Response) => {
   }
 });
 */
-
 
 app.delete("/user/:id", async (req: Request, res: Response) => {
   try {
