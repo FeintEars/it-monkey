@@ -1,8 +1,8 @@
 import {
   serviceCreatePost,
   serviceReadPost,
-  //serviceUpdatePost,
-  //serviceDeletePost,
+  serviceUpdatePost,
+  serviceDeletePost,
 } from "../service/post.js";
 type User = any;
 
@@ -19,7 +19,7 @@ async function controllerReadPost(id: number) {
 }
 
 // U - Update
-/*
+
 async function controllerUpdatePost(id: number, title: string, body: string) {
   const updatePost = serviceUpdatePost(id, title, body);
 
@@ -29,17 +29,17 @@ async function controllerUpdatePost(id: number, title: string, body: string) {
   }
 
   return updatePost;
-}*/
+}
 
 // D - Delete
-/*
+
 async function controllerDeletePost(id: number) {
   return serviceDeletePost(id);
-}*/
+}
 
 export {
   controllerCreatePost,
   controllerReadPost,
-  //controllerUpdatePost,
-  //controllerDeletePost,
+  controllerUpdatePost,
+  controllerDeletePost,
 };

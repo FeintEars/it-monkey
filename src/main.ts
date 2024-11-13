@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import {
   controllerCreatePost,
   controllerReadPost,
-  //controllerUpdatePost,
-  //controllerDeletePost,
+  controllerUpdatePost,
+  controllerDeletePost,
 } from "./controller/post.js";
 
 import {
@@ -53,7 +53,7 @@ app.post("/user", async (req: Request, res: Response) => {
   }
 });
 
- app.post("/post", async (req: Request, res: Response) => {
+app.post("/post", async (req: Request, res: Response) => {
   try {
     const title = req.body.title;
     const body = req.body.body;
@@ -83,13 +83,17 @@ app.put("/user/:id", async (req: Request, res: Response) => {
   }
 });
 
-/*app.put("/post/:id", async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  const title = req.body.title;
-  const body = req.body.body;
-  const post = await controllerUpdatePost(id, title, body);
-  res.send(post);
-});*/
+app.put("/post/:id", async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const title = req.body.title;
+    const body = req.body.body;
+    const post = await controllerUpdatePost(id, title, body);
+    res.send(post);
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
+  }
+});
 
 app.delete("/user/:id", async (req: Request, res: Response) => {
   try {
@@ -101,11 +105,15 @@ app.delete("/user/:id", async (req: Request, res: Response) => {
   }
 });
 
-/*app.delete("/post/:id", async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  await controllerDeletePost(id);
-  res.send({ status: "ok" });
-});*/
+app.delete("/post/:id", async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    await controllerDeletePost(id);
+    res.send({ status: "ok" });
+  } catch (error: any) {
+    res.status(400).send({ error: error.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
