@@ -6,7 +6,6 @@ import {
 } from "../service/user";
 
 // C - Create
-
 async function controllerCreateUser(
   firstName: string,
   lastName: string,
@@ -21,25 +20,16 @@ async function controllerReadUser(id: number) {
 }
 
 // U - Update
-
 async function controllerUpdateUser(
   id: number,
   firstName: string,
   lastName: string,
   age: number,
 ) {
-  const updateUser = serviceUpdateUser(id, firstName, lastName, age);
-
-  if (updateUser === null) {
-    console.log("User not found.");
-    return null;
-  }
-
-  return updateUser;
+  return serviceUpdateUser(id, firstName, lastName, age);
 }
 
 // D - Delete
-
 async function controllerDeleteUser(id: number) {
   await serviceDeleteUser(id);
 }

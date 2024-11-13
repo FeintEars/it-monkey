@@ -1,9 +1,9 @@
-import { NotUserError, PostNotFoundError } from "../errors.js";
+import { PostNotFoundError } from "../errors.js";
 import pool from "../db";
 
-// C - Create
-
 type User = any;
+
+// C - Create
 async function serviceCreatePost(title: string, body: string, author: User) {
   const result = await pool.query(
     'INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *',
@@ -11,8 +11,8 @@ async function serviceCreatePost(title: string, body: string, author: User) {
   );
   return result.rows[0];
 }
-// R - Read
 
+// R - Read
 async function serviceReadPost(id: number) {
   const result = await pool.query(
     `SELECT
@@ -55,8 +55,7 @@ async function serviceReadPost(id: number) {
   };
 }
 
-//  U - Update
-
+// U - Update
 async function serviceUpdatePost(id: number, title: string, body: string) {
   const result = await pool.query(
     'UPDATE "Posts" SET "title" = $1, "body" = $2 WHERE "id" = $3 RETURNING *',
@@ -69,7 +68,6 @@ async function serviceUpdatePost(id: number, title: string, body: string) {
 }
 
 // D - Delete
-
 async function serviceDeletePost(id: number) {
   const result = await pool.query('DELETE FROM "Posts" WHERE "id" = $1', [id]);
   if (result.rowCount === 0) {
