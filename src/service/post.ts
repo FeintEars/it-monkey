@@ -1,17 +1,16 @@
 import { NotUserError, PostNotFoundError } from "../errors.js";
 import pool from "../db";
-// C - Create
-/*
-async function serviceCreatePost(title: string, body: string, author: User) {
-  if (author instanceof User) {
-    const post = await databaseCreatePost(title, body, author.id);
-    post.author = await databaseReadUser(author.id);
-    return post;
-  } else {
-    throw new NotUserError();
-  }
-}*/
 
+// C - Create
+
+type User = any;
+async function serviceCreatePost(title: string, body: string, author: User) {
+  const result = await pool.query(
+    'INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *',
+    [title, body, author.id],
+  );
+  return result.rows[0];
+}
 // R - Read
 
 async function serviceReadPost(id: number) {
@@ -57,30 +56,30 @@ async function serviceReadPost(id: number) {
 }
 
 //  U - Update
-/*
-async function serviceUpdatePost(id: number, title: string, body: string) {
-  let post = await databaseReadPost(id);
-  if (post === null) {
-    throw new PostNotFoundError(id);
-  }
 
-  post = await databaseUpdatePost(id, title, body, post.authorId);
-  if (post === null) {
+async function serviceUpdatePost(id: number, title: string, body: string) {
+  const result = await pool.query(
+    'UPDATE "Posts" SET "title" = $1, "body" = $2 WHERE "id" = $3 RETURNING *',
+    [title, body, id],
+  );
+  if (result.rowCount === 0) {
     throw new PostNotFoundError(id);
   }
-  post.author = await databaseReadUser(post.authorId);
-  return post;
-}*/
+  return result.rows[0];
+}
 
 // D - Delete
-/*
+
 async function serviceDeletePost(id: number) {
-  return databaseDeletePost(id);
-}*/
+  const result = await pool.query('DELETE FROM "Posts" WHERE "id" = $1', [id]);
+  if (result.rowCount === 0) {
+    throw new PostNotFoundError(id);
+  }
+}
 
 export {
-  //serviceCreatePost,
+  serviceCreatePost,
   serviceReadPost,
-  //serviceUpdatePost,
-  //serviceDeletePost,
+  serviceUpdatePost,
+  serviceDeletePost,
 };
