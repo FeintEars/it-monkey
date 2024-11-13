@@ -26,14 +26,7 @@ async function controllerUpdateUser(
   lastName: string,
   age: number,
 ) {
-  const updateUser = serviceUpdateUser(id, firstName, lastName, age);
-
-  if (updateUser === null) {
-    console.log("User not found.");
-    return null;
-  }
-
-  return updateUser;
+  return serviceUpdateUser(id, firstName, lastName, age);
 }
 
 // D - Delete
