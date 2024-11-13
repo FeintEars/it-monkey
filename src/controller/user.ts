@@ -26,9 +26,7 @@ async function controllerUpdateUser(
   lastName: string,
   age: number,
 ) {
-  const updateUser = serviceUpdateUser(id, firstName, lastName, age);
-
-  return updateUser;
+  return serviceUpdateUser(id, firstName, lastName, age);
 }
 
 // D - Delete
