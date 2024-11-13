@@ -8,12 +8,18 @@ import pool from "../db";
 type User = any;
 
 // C - Create
-async function serviceCreatePost(title: string, body: string, authorId: number, ) {
-  const result = await pool.query ('INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *', [title, body, authorId])
+async function serviceCreatePost(
+  title: string,
+  body: string,
+  authorId: number,
+) {
+  const result = await pool.query(
+    'INSERT INTO "Posts" ("title", "body", "authorId") VALUES ($1, $2, $3) RETURNING *',
+    [title, body, authorId],
+  );
 
   return result.rows[0];
 }
-
 
 // R - Read
 async function serviceReadPost(id: number) {
@@ -26,7 +32,8 @@ async function serviceReadPost(id: number) {
       LEFT JOIN 
       "Users" u ON p."authorId" = u."id"
       WHERE 
-      p."id" = $1;`,[id],
+      p."id" = $1;`,
+    [id],
   );
   if (result.rowCount === 0) {
     throw new PostNotFoundError(id);
@@ -56,36 +63,31 @@ async function serviceReadPost(id: number) {
     },
   };
 }
-/*
+
 // U - Update
 async function serviceUpdatePost(id: number, title: string, body: string) {
-  let post = await databaseReadPost(id);
-  if (post === null) {
+  const result = await pool.query(
+    'UPDATE "Posts" SET "title" = $1, "body" = $2 WHERE id = $3 RETURNING *',
+    [title, body, id],
+  );
+  if (result.rowCount === 0) {
     throw new PostNotFoundError(id);
   }
-  post = await databaseUpdatePost(id, title, body, post.authorId);
-  if (post === null) {
-    throw new PostNotFoundError(id);
-  }
-  post.author = await databaseReadUser(post.authorId);
-  return post;
+  return result.rows[0];
 }
-*/
-/*
 
 // D - Delete
 async function serviceDeletePost(id: number) {
-  const result = await databaseDeletePost(id);
-  if (!result) {
-    throw new PostNotDeletedError();
+  const result = await pool.query('DELETE FROM "Posts" WHERE id = $1', [id]);
+  if (result.rowCount === 0) {
+    throw new PostNotFoundError(id);
   }
-  return result;
+  return result.rows[0];
 }
-*/
 
 export {
   serviceCreatePost,
   serviceReadPost,
-  //serviceUpdatePost,
-  //serviceDeletePost,
+  serviceUpdatePost,
+  serviceDeletePost,
 };

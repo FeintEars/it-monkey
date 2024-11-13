@@ -1,8 +1,8 @@
 import {
   controllerCreatePost,
   controllerReadPost,
-  // controllerUpdatePost,
-  //controllerDeletePost,
+  controllerUpdatePost,
+  controllerDeletePost,
 } from "./controller/post.js";
 
 import {
@@ -54,7 +54,6 @@ app.post("/user", async (req: Request, res: Response) => {
   }
 });
 
-
 app.post("/post", async (req: Request, res: Response) => {
   try {
     const title = req.body.title;
@@ -72,7 +71,6 @@ app.post("/post", async (req: Request, res: Response) => {
   }
 });
 
-
 app.put("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -86,7 +84,6 @@ app.put("/user/:id", async (req: Request, res: Response) => {
   }
 });
 
-/*
 app.put("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -98,7 +95,6 @@ app.put("/post/:id", async (req: Request, res: Response) => {
     res.status(400).send({ error: error.message });
   }
 });
-*/
 
 app.delete("/user/:id", async (req: Request, res: Response) => {
   try {
@@ -110,7 +106,6 @@ app.delete("/user/:id", async (req: Request, res: Response) => {
   }
 });
 
-/*
 app.delete("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -121,7 +116,6 @@ app.delete("/post/:id", async (req: Request, res: Response) => {
   }
 });
 
-*/
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
