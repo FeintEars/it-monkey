@@ -6,7 +6,6 @@ import {
 } from "../service/user";
 
 // C - Create
-
 async function controllerCreateUser(
   firstName: string,
   lastName: string,
@@ -21,7 +20,6 @@ async function controllerReadUser(id: number) {
 }
 
 // U - Update
-
 async function controllerUpdateUser(
   id: number,
   firstName: string,
@@ -39,7 +37,6 @@ async function controllerUpdateUser(
 }
 
 // D - Delete
-
 async function controllerDeleteUser(id: number) {
   await serviceDeleteUser(id);
 }

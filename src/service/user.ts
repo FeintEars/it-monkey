@@ -1,7 +1,7 @@
 import { UserNotFoundError } from "../errors.js";
 import pool from "../db";
-// C - Create
 
+// C - Create
 async function serviceCreateUser(
   firstName: string,
   lastName: string,
@@ -13,8 +13,8 @@ async function serviceCreateUser(
   );
   return users.rows[0];
 }
-// R - Read
 
+// R - Read
 async function serviceReadUser(id: number) {
   const users = await pool.query('SELECT * FROM "Users" WHERE id = $1', [id]);
   if (users.rowCount === 0) {
@@ -24,7 +24,6 @@ async function serviceReadUser(id: number) {
 }
 
 // U - Update
-
 async function serviceUpdateUser(
   id: number,
   firstName: string,
@@ -42,7 +41,6 @@ async function serviceUpdateUser(
 }
 
 // D - Delete
-
 async function serviceDeleteUser(id: number) {
   const users = await pool.query(
     'DELETE FROM "Users" WHERE "id" = $1 RETURNING *',
