@@ -1,11 +1,9 @@
 import {
-  NotUserError,
+  // NotUserError,
   PostNotFoundError,
-  PostNotDeletedError,
+  // PostNotDeletedError,
 } from "../errors.js";
 import pool from "../db";
-
-type User = any;
 
 // C - Create
 async function serviceCreatePost(
