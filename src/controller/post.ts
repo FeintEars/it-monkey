@@ -6,7 +6,11 @@ import {
 } from "../service/post.js";
 
 // C - Create
-async function controllerCreatePost(title: string, body: string, authorId: number) {
+async function controllerCreatePost(
+  title: string,
+  body: string,
+  authorId: number,
+) {
   return serviceCreatePost(title, body, authorId);
 }
 
@@ -17,9 +21,7 @@ async function controllerReadPost(id: number) {
 
 // U - Update
 async function controllerUpdatePost(id: number, title: string, body: string) {
-  const updatePost = serviceUpdatePost(id, title, body);
-
-  return updatePost;
+  return serviceUpdatePost(id, title, body);
 }
 
 // D - Delete
