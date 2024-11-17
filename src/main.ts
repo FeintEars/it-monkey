@@ -1,25 +1,17 @@
+import "reflect-metadata";
 import { Request, Response } from "express";
-import {
-  controllerCreatePost,
-  controllerReadPost,
-  controllerUpdatePost,
-  controllerDeletePost,
-} from "./controller/post.js";
-
-import {
-  controllerCreateUser,
-  controllerReadUser,
-  controllerUpdateUser,
-  controllerDeleteUser,
-} from "./controller/user.js";
-
 import express from "express";
 import { NotUserError } from "./errors.js";
-const app = express();
-const port = 3000;
+import { AppDataSource } from "./db";
 
-app.use(express.json());
+async function createServer() {
+  await AppDataSource.initialize();
 
+  const app = express();
+  const port = 3000;
+
+  app.use(express.json());
+  /*
 app.get("/user/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -114,7 +106,10 @@ app.delete("/post/:id", async (req: Request, res: Response) => {
     res.status(400).send({ error: error.message });
   }
 });
+*/
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
+createServer();
