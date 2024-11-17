@@ -15,7 +15,8 @@
   "dependencies": {
     "express": "^4.21.0",
     "lodash": "^4.17.21",
-    "pg": "^8.13.0"
+    "pg": "^8.13.0",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@eslint/js": "^9.5.0",

@@ -1,12 +1,17 @@
-import { Pool } from "pg";
+import { DataSource } from "typeorm";
+import { User } from "./entities/user";
+import { Post } from "./entities/post";
 
-// Налаштування підключення до бази даних
-const pool = new Pool({
+export const AppDataSource = new DataSource({
+  type: "postgres",
   host: "localhost",
   port: 5432,
-  user: "admin",
+  username: "admin",
   password: "admin",
   database: "itmonkey",
+  synchronize: true,
+  logging: true,
+  entities: [User, Post],
+  subscribers: [],
+  migrations: [],
 });
-
-export default pool;
