@@ -1,8 +1,10 @@
 import "reflect-metadata";
 import { Request, Response } from "express";
 import { AppDataSource } from "./db.js";
+import { User } from "./entities/user.js";
+import { Post } from "./entities/post.js";
 import express from "express";
-import { NotUserError } from "./errors.js";
+import { NotUserError, UserNotFoundError } from "./errors.js";
 
 async function createServer() {
   await AppDataSource.initialize();
@@ -10,17 +12,21 @@ async function createServer() {
   const port = 3000;
 
   app.use(express.json());
-  /*
+
   app.get("/user/:id", async (req: Request, res: Response) => {
     try {
+      const userRepository = AppDataSource.getRepository(User);
       const id = parseInt(req.params.id);
-      const user = await controllerReadUser(id);
+      const user = await userRepository.findOneBy({ id: id });
+      if (user === null) {
+        throw new UserNotFoundError(id);
+      }
       res.send(user);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  
+  /*
   app.get("/post/:id", async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
@@ -30,19 +36,23 @@ async function createServer() {
       res.status(400).send({ error: error.message });
     }
   });
-  
+  */
+
   app.post("/user", async (req: Request, res: Response) => {
     try {
-      const firstName = req.body.firstName;
-      const lastName = req.body.lastName;
-      const age = req.body.age;
-      const user = await controllerCreateUser(firstName, lastName, age);
+      const userRepository = AppDataSource.getRepository(User);
+      const user = new User();
+      user.firstName = req.body.firstName;
+      user.lastName = req.body.lastName;
+      user.age = req.body.age;
+      await userRepository.save(user);
       res.send(user);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  
+
+  /*
   app.post("/post", async (req: Request, res: Response) => {
     try {
       const title = req.body.title;
