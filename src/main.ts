@@ -1,7 +1,9 @@
 import "reflect-metadata";
 import { Request, Response } from "express";
 import express from "express";
-import { NotUserError } from "./errors.js";
+import { User } from "./entities/user";
+import { Post } from "./entities/post";
+import { UserNotFoundError, UserNotDeletedError } from "./errors.js";
 import { AppDataSource } from "./db";
 
 async function createServer() {
@@ -11,18 +13,39 @@ async function createServer() {
   const port = 3000;
 
   app.use(express.json());
-  /*
-app.get("/user/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    const user = await controllerReadUser(id);
-    res.send(user);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
 
-app.get("/post/:id", async (req: Request, res: Response) => {
+  app.get("/user/:id", async (req: Request, res: Response) => {
+    try {
+      const userRepository = AppDataSource.getRepository(User);
+      const id = parseInt(req.params.id);
+      const user = await userRepository.findOneBy({ id });
+      if (user === null) {
+        throw new UserNotFoundError (id);
+      }
+      res.send(user);
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
+    }
+  });
+
+
+  app.post("/user", async (req: Request, res: Response) => {
+    try {
+      const userRepository = AppDataSource.getRepository(User);
+      const user = new User()
+      user.firstName = req.body.firstName
+      user.lastName = req.body.lastName;
+      user.age = req.body.age;
+      await userRepository.save(user)
+      res.send(user);
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
+    }
+  });
+
+  /*
+
+  app.get("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const post = await controllerReadPost(id);
@@ -33,17 +56,6 @@ app.get("/post/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/user", async (req: Request, res: Response) => {
-  try {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const age = req.body.age;
-    const user = await controllerCreateUser(firstName, lastName, age);
-    res.send(user);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
 
 app.post("/post", async (req: Request, res: Response) => {
   try {
@@ -62,19 +74,28 @@ app.post("/post", async (req: Request, res: Response) => {
   }
 });
 
+*/
+
 app.put("/user/:id", async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const age = req.body.age;
-    const user = await controllerUpdateUser(id, firstName, lastName, age);
+    const userRepository = AppDataSource.getRepository(User);
+    const user = new User ()
+
+    user.id = parseInt(req.params.id);
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.age = req.body.age;
+    const result = await userRepository.update (user.id, user)
+    if (result.affected === 0) {
+      throw new UserNotFoundError (user.id);
+    }
     res.send(user);
   } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
 
+/*
 app.put("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -85,17 +106,26 @@ app.put("/post/:id", async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
-});
+}); */  
+
+
 
 app.delete("/user/:id", async (req: Request, res: Response) => {
   try {
+    const userRepository = AppDataSource.getRepository(User);
     const id = parseInt(req.params.id);
-    await controllerDeleteUser(id);
-    res.send({ status: "ok" });
+    const result = await userRepository.delete (id)
+    if (result.affected === 0) {
+      throw new UserNotDeletedError ()
+    }
+    res.send({ status: "ok" }); 
+    
   } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
 });
+
+/*
 
 app.delete("/post/:id", async (req: Request, res: Response) => {
   try {
