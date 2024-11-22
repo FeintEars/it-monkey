@@ -4,7 +4,11 @@ import { AppDataSource } from "./db.js";
 import { User } from "./entities/user.js";
 import { Post } from "./entities/post.js";
 import express from "express";
-import { NotUserError, UserNotFoundError } from "./errors.js";
+import {
+  NotUserError,
+  UserNotFoundError,
+  UserNotDeletedError,
+} from "./errors.js";
 
 async function createServer() {
   await AppDataSource.initialize();
@@ -69,20 +73,28 @@ async function createServer() {
       }
     }
   });
-  
+  */
   app.put("/user/:id", async (req: Request, res: Response) => {
     try {
-      const id = parseInt(req.params.id);
-      const firstName = req.body.firstName;
-      const lastName = req.body.lastName;
-      const age = req.body.age;
-      const user = await controllerUpdateUser(id, firstName, lastName, age);
+      const userRepository = AppDataSource.getRepository(User);
+      const user = new User();
+
+      user.id = parseInt(req.params.id);
+      user.firstName = req.body.firstName;
+      user.lastName = req.body.lastName;
+      user.age = req.body.age;
+
+      const result = await userRepository.update(user.id, user);
+      if (result.affected === 0) {
+        throw new UserNotFoundError(user.id);
+      }
       res.send(user);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  
+
+  /*
   app.put("/post/:id", async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
@@ -95,7 +107,7 @@ async function createServer() {
     }
   });
   
-  app.delete("/user/:id", async (req: Request, res: Response) => {
+  app.delete("/post/:id", async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       await controllerDeleteUser(id);
@@ -104,17 +116,22 @@ async function createServer() {
       res.status(400).send({ error: error.message });
     }
   });
-  
-  app.delete("/post/:id", async (req: Request, res: Response) => {
+  */
+
+  app.delete("/user/:id", async (req: Request, res: Response) => {
     try {
+      const userRepository = AppDataSource.getRepository(User);
       const id = parseInt(req.params.id);
-      await controllerDeletePost(id);
+      const result = await userRepository.delete(id);
+
+      if (result.affected === 0) {
+        throw new UserNotDeletedError();
+      }
       res.send({ status: "ok" });
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  */
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

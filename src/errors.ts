@@ -12,6 +12,13 @@ class UserNotFoundError extends Error {
   }
 }
 
+class UserNotDeletedError extends Error {
+  constructor() {
+    super(`The user you are trying to delete was not found`);
+    this.name = `user-not-delete`;
+  }
+}
+
 class PostNotFoundError extends Error {
   constructor(id: number) {
     super(`Post ${id} not found`);
@@ -19,4 +26,9 @@ class PostNotFoundError extends Error {
   }
 }
 
-export { NotUserError, UserNotFoundError, PostNotFoundError };
+export {
+  NotUserError,
+  UserNotFoundError,
+  PostNotFoundError,
+  UserNotDeletedError,
+};
