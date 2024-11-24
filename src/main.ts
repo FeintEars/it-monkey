@@ -3,7 +3,11 @@ import "reflect-metadata";
 import { AppDataSource } from "./db";
 import express from "express";
 import { Request, Response } from "express";
-import { UserNotFoundError, UserNotDeletedError } from "./errors";
+import {
+  UserNotFoundError,
+  UserNotDeletedError,
+  PostNotFoundError,
+} from "./errors";
 import { User } from "./entities/user";
 import { Post } from "./entities/post";
 
@@ -19,7 +23,12 @@ async function createServer() {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const id = parseInt(req.params.id);
-      const user = await userRepository.findOneBy({ id });
+      //const user = await userRepository.findOneBy({ id });
+      const user = await userRepository.findOne({
+        where: {id},
+        relations: ["posts"]
+      })
+
 
       if (user === null) {
         throw new UserNotFoundError(id);
@@ -29,17 +38,24 @@ async function createServer() {
       res.status(400).send({ error: error.message });
     }
   });
-  /*
-app.get("/post/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    const post = await controllerReadPost(id);
-    res.send(post);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
-*/
+
+  app.get("/post/:id", async (req: Request, res: Response) => {
+    try {
+      const postRepository = AppDataSource.getRepository(Post);
+      const id = parseInt(req.params.id);
+      const post = await postRepository.findOne({
+        where: { id },
+        relations: ["author"],
+      });
+
+      if (post === null) {
+        throw new PostNotFoundError(id);
+      }
+      res.send(post);
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
+    }
+  });
 
   app.post("/user", async (req: Request, res: Response) => {
     try {
