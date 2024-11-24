@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./user";
 
 @Entity()
 export class Post {
@@ -9,8 +10,11 @@ export class Post {
   title: string;
 
   @Column()
-  bode: string;
+  body: string;
 
   @Column()
   authorId: number;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  author: User;
 }

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import express from "express";
 import { User } from "./entities/user";
 import { Post } from "./entities/post";
-import { UserNotFoundError, UserNotDeletedError } from "./errors.js";
+import { UserNotFoundError, UserNotDeletedError, PostNotFoundError } from "./errors.js";
 import { AppDataSource } from "./db";
 
 async function createServer() {
@@ -18,9 +18,12 @@ async function createServer() {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const id = parseInt(req.params.id);
-      const user = await userRepository.findOneBy({ id });
+      const user = await userRepository.findOne({
+      where: {id},
+      relations: ["posts"]
+      });      
       if (user === null) {
-        throw new UserNotFoundError (id);
+        throw new UserNotFoundError(id);
       }
       res.send(user);
     } catch (error: any) {
@@ -28,16 +31,33 @@ async function createServer() {
     }
   });
 
-
   app.post("/user", async (req: Request, res: Response) => {
     try {
       const userRepository = AppDataSource.getRepository(User);
-      const user = new User()
-      user.firstName = req.body.firstName
+      const user = new User();
+      user.firstName = req.body.firstName;
       user.lastName = req.body.lastName;
       user.age = req.body.age;
-      await userRepository.save(user)
+      await userRepository.save(user);
       res.send(user);
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
+    }
+  });
+
+  app.get("/post/:id", async (req: Request, res: Response) => {
+    try {
+      const postRepository = AppDataSource.getRepository(Post);
+      const id = parseInt(req.params.id);
+      const post = await postRepository.findOne ({
+        where: {id},
+        relations: ["author"]
+      }); 
+
+      if (post === null) {
+        throw new PostNotFoundError(id);
+      }
+      res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
@@ -76,26 +96,26 @@ app.post("/post", async (req: Request, res: Response) => {
 
 */
 
-app.put("/user/:id", async (req: Request, res: Response) => {
-  try {
-    const userRepository = AppDataSource.getRepository(User);
-    const user = new User ()
+  app.put("/user/:id", async (req: Request, res: Response) => {
+    try {
+      const userRepository = AppDataSource.getRepository(User);
+      const user = new User();
 
-    user.id = parseInt(req.params.id);
-    user.firstName = req.body.firstName;
-    user.lastName = req.body.lastName;
-    user.age = req.body.age;
-    const result = await userRepository.update (user.id, user)
-    if (result.affected === 0) {
-      throw new UserNotFoundError (user.id);
+      user.id = parseInt(req.params.id);
+      user.firstName = req.body.firstName;
+      user.lastName = req.body.lastName;
+      user.age = req.body.age;
+      const result = await userRepository.update(user.id, user);
+      if (result.affected === 0) {
+        throw new UserNotFoundError(user.id);
+      }
+      res.send(user);
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
     }
-    res.send(user);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
+  });
 
-/*
+  /*
 app.put("/post/:id", async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
@@ -106,26 +126,23 @@ app.put("/post/:id", async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
-}); */  
+}); */
 
-
-
-app.delete("/user/:id", async (req: Request, res: Response) => {
-  try {
-    const userRepository = AppDataSource.getRepository(User);
-    const id = parseInt(req.params.id);
-    const result = await userRepository.delete (id)
-    if (result.affected === 0) {
-      throw new UserNotDeletedError ()
+  app.delete("/user/:id", async (req: Request, res: Response) => {
+    try {
+      const userRepository = AppDataSource.getRepository(User);
+      const id = parseInt(req.params.id);
+      const result = await userRepository.delete(id);
+      if (result.affected === 0) {
+        throw new UserNotDeletedError();
+      }
+      res.send({ status: "ok" });
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
     }
-    res.send({ status: "ok" }); 
-    
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
+  });
 
-/*
+  /*
 
 app.delete("/post/:id", async (req: Request, res: Response) => {
   try {

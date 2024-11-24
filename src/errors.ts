@@ -26,4 +26,9 @@ class UserNotDeletedError extends Error {
   }
 }
 
-export { NotUserError, UserNotFoundError, PostNotFoundError, UserNotDeletedError };
+export {
+  NotUserError,
+  UserNotFoundError,
+  PostNotFoundError,
+  UserNotDeletedError,
+};
