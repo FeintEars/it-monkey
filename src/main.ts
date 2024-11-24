@@ -8,7 +8,9 @@ import {
   NotUserError,
   UserNotFoundError,
   UserNotDeletedError,
+  PostNotFoundError,
 } from "./errors.js";
+import { RelationId } from "typeorm";
 
 async function createServer() {
   await AppDataSource.initialize();
@@ -21,7 +23,11 @@ async function createServer() {
     try {
       const userRepository = AppDataSource.getRepository(User);
       const id = parseInt(req.params.id);
-      const user = await userRepository.findOneBy({ id: id });
+      //const user = await userRepository.findOneBy({ id: id });
+      const user = await userRepository.findOne({
+        where: { id },
+        relations: ["posts"],
+      });
       if (user === null) {
         throw new UserNotFoundError(id);
       }
@@ -30,17 +36,26 @@ async function createServer() {
       res.status(400).send({ error: error.message });
     }
   });
-  /*
+
   app.get("/post/:id", async (req: Request, res: Response) => {
     try {
+      const postRepository = AppDataSource.getRepository(Post);
+
       const id = parseInt(req.params.id);
-      const post = await controllerReadPost(id);
+      //const post = await postRepository.findOneBy({ id: id });
+      const post = await postRepository.findOne({
+        where: { id },
+        relations: ["author"],
+      });
+
+      if (post === null) {
+        throw new PostNotFoundError(id);
+      }
       res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  */
 
   app.post("/user", async (req: Request, res: Response) => {
     try {
