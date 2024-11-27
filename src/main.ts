@@ -10,7 +10,6 @@ import {
   UserNotDeletedError,
   PostNotFoundError,
 } from "./errors.js";
-import { RelationId } from "typeorm";
 
 async function createServer() {
   await AppDataSource.initialize();
@@ -121,17 +120,22 @@ async function createServer() {
       res.status(400).send({ error: error.message });
     }
   });
-  
+  */
+
   app.delete("/post/:id", async (req: Request, res: Response) => {
     try {
+      const postRepository = AppDataSource.getRepository(Post);
       const id = parseInt(req.params.id);
-      await controllerDeleteUser(id);
+      const result = await postRepository.delete(id);
+      
+      if (result.affected === 0) {
+        throw new PostNotFoundError(id);
+      }
       res.send({ status: "ok" });
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  */
 
   app.delete("/user/:id", async (req: Request, res: Response) => {
     try {
