@@ -10,6 +10,7 @@ import {
   UserNotDeletedError,
   PostNotFoundError,
 } from "./errors.js";
+import { error } from "console";
 
 async function createServer() {
   await AppDataSource.initialize();
@@ -69,25 +70,23 @@ async function createServer() {
       res.status(400).send({ error: error.message });
     }
   });
-
-  /*
+ 
   app.post("/post", async (req: Request, res: Response) => {
     try {
-      const title = req.body.title;
-      const body = req.body.body;
-      const authorId = req.body.authorId;
-      const author = await controllerReadUser(authorId);
-      const post = await controllerCreatePost(title, body, author);
+      const postRepository = AppDataSource.getRepository(Post);
+      const userRepository = AppDataSource.getRepository(User);
+      const post = new Post();
+      post.title = req.body.title;
+      post.body = req.body.body;
+      post.authorId = req.body.authorId;
+      await postRepository.save(post);
+      post.author = await userRepository.findOneBy({id:post.authorId})
       res.send(post);
     } catch (error: any) {
-      if (error instanceof NotUserError) {
-        res.status(400).send({ error: "User is not found by authorId" });
-      } else {
-        res.status(400).send({ error: error.message });
-      }
+      res.status(400).send({ error: error.message });
     }
   });
-  */
+
   app.put("/user/:id", async (req: Request, res: Response) => {
     try {
       const userRepository = AppDataSource.getRepository(User);
@@ -127,7 +126,7 @@ async function createServer() {
       const postRepository = AppDataSource.getRepository(Post);
       const id = parseInt(req.params.id);
       const result = await postRepository.delete(id);
-      
+
       if (result.affected === 0) {
         throw new PostNotFoundError(id);
       }
