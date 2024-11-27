@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import express from "express";
 import { User } from "./entities/user";
 import { Post } from "./entities/post";
-import { UserNotFoundError, UserNotDeletedError, PostNotFoundError } from "./errors.js";
+import { UserNotFoundError, UserNotDeletedError, PostNotFoundError, PostNotDeletedError} from "./errors.js";
 import { AppDataSource } from "./db";
 
 async function createServer() {
@@ -115,6 +115,8 @@ app.post("/post", async (req: Request, res: Response) => {
     }
   });
 
+
+  
   /*
 app.put("/post/:id", async (req: Request, res: Response) => {
   try {
@@ -142,18 +144,21 @@ app.put("/post/:id", async (req: Request, res: Response) => {
     }
   });
 
-  /*
 
-app.delete("/post/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    await controllerDeletePost(id);
-    res.send({ status: "ok" });
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
-*/
+  app.delete("/post/:id", async (req: Request, res: Response) => {
+    try {
+      const postRepository = AppDataSource.getRepository(Post);
+      const id = parseInt(req.params.id);
+      const result = await postRepository.delete(id);
+      if (result.affected === 0) {
+        throw new PostNotDeletedError();
+      }
+      res.send({ status: "ok" });
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
+    }
+  });
+
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
