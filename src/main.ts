@@ -107,19 +107,28 @@ async function createServer() {
     }
   });
 
-  /*
+  
   app.put("/post/:id", async (req: Request, res: Response) => {
     try {
-      const id = parseInt(req.params.id);
-      const title = req.body.title;
-      const body = req.body.body;
-      const post = await controllerUpdatePost(id, title, body);
+      const postRepository = AppDataSource.getRepository(Post);
+      const userRepository = AppDataSource.getRepository(User);
+      const post = new Post ();
+      post.id = parseInt(req.params.id);
+      post.title = req.body.title;
+      post.body = req.body.body;
+      post.authorId =req.body.authorId;
+     
+      const result = await postRepository.update(post.id, post);
+       if (result.affected === 0) {
+        throw new PostNotFoundError(post.id);
+       }
+       post.author = await userRepository.findOneBy({id:post.authorId})
       res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-  */
+  
 
   app.delete("/post/:id", async (req: Request, res: Response) => {
     try {
