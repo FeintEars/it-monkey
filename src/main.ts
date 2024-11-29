@@ -3,7 +3,12 @@ import { Request, Response } from "express";
 import express from "express";
 import { User } from "./entities/user";
 import { Post } from "./entities/post";
-import { UserNotFoundError, UserNotDeletedError, PostNotFoundError, PostNotDeletedError} from "./errors.js";
+import {
+  UserNotFoundError,
+  UserNotDeletedError,
+  PostNotFoundError,
+  PostNotDeletedError,
+} from "./errors.js";
 import { AppDataSource } from "./db";
 
 async function createServer() {
@@ -19,13 +24,31 @@ async function createServer() {
       const userRepository = AppDataSource.getRepository(User);
       const id = parseInt(req.params.id);
       const user = await userRepository.findOne({
-      where: {id},
-      relations: ["posts"]
-      });      
+        where: { id },
+        relations: ["posts"],
+      });
       if (user === null) {
         throw new UserNotFoundError(id);
       }
       res.send(user);
+    } catch (error: any) {
+      res.status(400).send({ error: error.message });
+    }
+  });
+
+  app.get("/post/:id", async (req: Request, res: Response) => {
+    try {
+      const postRepository = AppDataSource.getRepository(Post);
+      const id = parseInt(req.params.id);
+      const post = await postRepository.findOne({
+        where: { id },
+        relations: ["author"],
+      });
+
+      if (post === null) {
+        throw new PostNotFoundError(id);
+      }
+      res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
@@ -45,56 +68,22 @@ async function createServer() {
     }
   });
 
-  app.get("/post/:id", async (req: Request, res: Response) => {
+  app.post("/post", async (req: Request, res: Response) => {
     try {
       const postRepository = AppDataSource.getRepository(Post);
-      const id = parseInt(req.params.id);
-      const post = await postRepository.findOne ({
-        where: {id},
-        relations: ["author"]
-      }); 
-
-      if (post === null) {
-        throw new PostNotFoundError(id);
-      }
+      const userRepository = AppDataSource.getRepository(User);
+      const post = new Post();
+      post.title = req.body.title;
+      post.body = req.body.body;
+      post.authorId = req.body.authorId;
+      await postRepository.save(post);
+      post.author = await userRepository.findOneBy({ id: post.authorId });
       res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
 
-  /*
-
-  app.get("/post/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    const post = await controllerReadPost(id);
-    //post.author = await controllerReadUser(post.authorId);
-    res.send(post);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-});
-
-
-app.post("/post", async (req: Request, res: Response) => {
-  try {
-    const title = req.body.title;
-    const body = req.body.body;
-    const authorId = req.body.authorId;
-    const author = await controllerReadUser(authorId);
-    const post = await controllerCreatePost(title, body, author);
-    res.send(post);
-  } catch (error: any) {
-    if (error instanceof NotUserError) {
-      res.status(400).send({ error: "User is not found by authorId" });
-    } else {
-      res.status(400).send({ error: error.message });
-    }
-  }
-});
-
-*/
 
   app.put("/user/:id", async (req: Request, res: Response) => {
     try {
@@ -115,43 +104,26 @@ app.post("/post", async (req: Request, res: Response) => {
     }
   });
 
-
-
-
-
   app.put("/post/:id", async (req: Request, res: Response) => {
     try {
       const postRepository = AppDataSource.getRepository(Post);
       const userRepository = AppDataSource.getRepository(User);
       const post = new Post();
       post.id = parseInt(req.params.id);
-      post.title = req.body.title
-      post.body = req.body.body
+      post.title = req.body.title;
+      post.body = req.body.body;
       const result = await postRepository.update(post.id, post);
-      
+
       if (result.affected === 0) {
         throw new PostNotFoundError(post.id);
       }
+
       post.author = await userRepository.findOneBy({ id: post.authorId });
       res.send(post);
-
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-
-  /*
-app.put("/post/:id", async (req: Request, res: Response) => {
-  try {
-    const id = parseInt(req.params.id);
-    const title = req.body.title;
-    const body = req.body.body;
-    const post = await controllerUpdatePost(id, title, body);
-    res.send(post);
-  } catch (error: any) {
-    res.status(400).send({ error: error.message });
-  }
-}); */
 
   app.delete("/user/:id", async (req: Request, res: Response) => {
     try {
@@ -167,7 +139,6 @@ app.put("/post/:id", async (req: Request, res: Response) => {
     }
   });
 
-
   app.delete("/post/:id", async (req: Request, res: Response) => {
     try {
       const postRepository = AppDataSource.getRepository(Post);
@@ -181,7 +152,6 @@ app.put("/post/:id", async (req: Request, res: Response) => {
       res.status(400).send({ error: error.message });
     }
   });
-
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
