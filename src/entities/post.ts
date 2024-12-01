@@ -15,5 +15,5 @@ export class Post {
   authorId: number;
 
   @ManyToOne(() => User, (user) => user.posts)
-  author: User|null;
+  author: User | null;
 }
