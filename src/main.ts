@@ -107,7 +107,6 @@ async function createServer() {
   app.put("/post/:id", async (req: Request, res: Response) => {
     try {
       const postRepository = AppDataSource.getRepository(Post);
-      const userRepository = AppDataSource.getRepository(User);
       const post = new Post();
       post.id = parseInt(req.params.id);
       post.title = req.body.title;
@@ -117,9 +116,11 @@ async function createServer() {
       if (result.affected === 0) {
         throw new PostNotFoundError(post.id);
       }
-
-      post.author = await userRepository.findOneBy({ id: post.authorId });
-      res.send(post);
+      const fullpost = await postRepository.findOne ({
+          where: {id: post.id},
+          relations: ["author"]
+        })
+      res.send(fullpost);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
