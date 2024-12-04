@@ -12,6 +12,13 @@ class UserNotFoundError extends Error {
   }
 }
 
+class AuthorNotFoundError extends Error {
+  constructor() {
+    super(`Author not found`);
+    this.name = `user-not-found`;
+  }
+}
+
 class PostNotFoundError extends Error {
   constructor(id: number) {
     super(`Post ${id} not found`);
@@ -39,4 +46,5 @@ export {
   PostNotFoundError,
   UserNotDeletedError,
   PostNotDeletedError,
+  AuthorNotFoundError,
 };

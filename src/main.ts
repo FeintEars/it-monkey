@@ -8,6 +8,7 @@ import {
   UserNotDeletedError,
   PostNotFoundError,
   PostNotDeletedError,
+  AuthorNotFoundError,
 } from "./errors";
 import { User } from "./entities/user";
 import { Post } from "./entities/post";
@@ -82,8 +83,16 @@ async function createServer() {
       post.title = req.body.title;
       post.body = req.body.body;
       post.authorId = req.body.authorId;
-      await postRepository.save(post);
+
+      if (post.authorId === null) {
+        throw new AuthorNotFoundError();
+      }
       post.author = await userRepository.findOneBy({ id: post.authorId });
+
+      if (post.author === null) {
+        throw new AuthorNotFoundError();
+      }
+      await postRepository.save(post);
       res.send(post);
     } catch (error: any) {
       console.log(error);
