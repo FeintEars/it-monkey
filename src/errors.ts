@@ -19,6 +19,13 @@ class PostNotFoundError extends Error {
   }
 }
 
+class AuthorNotFoundError extends Error {
+  constructor() {
+    super(`Author not found`);
+    this.name = `author-not-found`;
+  }
+}
+
 class UserNotDeletedError extends Error {
   constructor() {
     super(`The user you are trying to delete was not found`);
@@ -39,4 +46,5 @@ export {
   PostNotFoundError,
   UserNotDeletedError,
   PostNotDeletedError,
+  AuthorNotFoundError,
 };

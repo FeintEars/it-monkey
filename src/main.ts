@@ -8,6 +8,7 @@ import {
   UserNotDeletedError,
   PostNotFoundError,
   PostNotDeletedError,
+  AuthorNotFoundError,
 } from "./errors.js";
 import { AppDataSource } from "./db";
 
@@ -76,14 +77,24 @@ async function createServer() {
       post.title = req.body.title;
       post.body = req.body.body;
       post.authorId = req.body.authorId;
-      await postRepository.save(post);
+
+      if (post.authorId === null) {
+        throw new AuthorNotFoundError();
+      }
+
       post.author = await userRepository.findOneBy({ id: post.authorId });
+
+      if (post.author === null) {
+        throw new AuthorNotFoundError();
+      }
+
+      await postRepository.save(post);
+
       res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
     }
   });
-
 
   app.put("/user/:id", async (req: Request, res: Response) => {
     try {
@@ -116,10 +127,10 @@ async function createServer() {
       if (result.affected === 0) {
         throw new PostNotFoundError(post.id);
       }
-      const fullpost = await postRepository.findOne ({
-          where: {id: post.id},
-          relations: ["author"]
-        })
+      const fullpost = await postRepository.findOne({
+        where: { id: post.id },
+        relations: ["author"],
+      });
       res.send(fullpost);
     } catch (error: any) {
       res.status(400).send({ error: error.message });

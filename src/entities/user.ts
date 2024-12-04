@@ -12,7 +12,7 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   age: number;
 
   @OneToMany(() => Post, (post) => post.author)
