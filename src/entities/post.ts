@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./user";
+import { OnUpdateType } from "typeorm/metadata/types/OnUpdateType";
 @Entity()
 export class Post {
   @PrimaryGeneratedColumn()
@@ -11,9 +12,12 @@ export class Post {
   @Column()
   body: string;
 
-  @Column()
+  @Column({ nullable: true })
   authorId: number;
 
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.posts, {
+    onDelete: "SET NULL",
+    onUpdate: "SET NULL",
+  })
   author: User | null;
 }

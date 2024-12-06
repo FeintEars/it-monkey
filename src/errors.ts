@@ -25,8 +25,15 @@ class PostNotFoundError extends Error {
     this.name = `post-not-found`;
   }
 }
+class AuthorNotFoundError extends Error {
+  constructor() {
+    super(`Author not found`);
+    this.name = `author-not-found`;
+  }
+}
 
 export {
+  AuthorNotFoundError,
   NotUserError,
   UserNotFoundError,
   PostNotFoundError,

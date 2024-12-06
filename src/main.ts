@@ -5,7 +5,7 @@ import { User } from "./entities/user.js";
 import { Post } from "./entities/post.js";
 import express from "express";
 import {
-  NotUserError,
+  AuthorNotFoundError,
   UserNotFoundError,
   UserNotDeletedError,
   PostNotFoundError,
@@ -73,14 +73,26 @@ async function createServer() {
 
   app.post("/post", async (req: Request, res: Response) => {
     try {
-      const postRepository = AppDataSource.getRepository(Post);
-      const userRepository = AppDataSource.getRepository(User);
       const post = new Post();
       post.title = req.body.title;
       post.body = req.body.body;
       post.authorId = req.body.authorId;
-      await postRepository.save(post);
-      post.author = await userRepository.findOneBy({ id: post.authorId });
+
+      if (post.authorId === null) {
+        throw new AuthorNotFoundError();
+      }
+      await AppDataSource.transaction(async (manager) => {
+        const postRepository = manager.getRepository(Post);
+        const userRepository = manager.getRepository(User);
+
+        post.author = await userRepository.findOneBy({ id: post.authorId });
+
+        if (post.author === null) {
+          throw new AuthorNotFoundError();
+        }
+        await postRepository.save(post);
+      });
+
       res.send(post);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
@@ -109,20 +121,23 @@ async function createServer() {
 
   app.put("/post/:id", async (req: Request, res: Response) => {
     try {
-      const postRepository = AppDataSource.getRepository(Post);
-
       const post = new Post();
       post.id = parseInt(req.params.id);
       post.title = req.body.title;
       post.body = req.body.body;
 
-      const result = await postRepository.update(post.id, post);
-      if (result.affected === 0) {
-        throw new PostNotFoundError(post.id);
-      }
-      const megaFullPost = await postRepository.findOne({
-        where: { id: post.id },
-        relations: ["author"],
+      let megaFullPost;
+      await AppDataSource.transaction(async (manager) => {
+        const postRepository = manager.getRepository(Post);
+
+        const result = await postRepository.update(post.id, post);
+        if (result.affected === 0) {
+          throw new PostNotFoundError(post.id);
+        }
+        megaFullPost = await postRepository.findOne({
+          where: { id: post.id },
+          relations: ["author"],
+        });
       });
       res.send(megaFullPost);
     } catch (error: any) {
