@@ -71,8 +71,6 @@ async function createServer() {
 
   app.post("/post", async (req: Request, res: Response) => {
     try {
-      const postRepository = AppDataSource.getRepository(Post);
-      const userRepository = AppDataSource.getRepository(User);
       const post = new Post();
       post.title = req.body.title;
       post.body = req.body.body;
@@ -82,13 +80,18 @@ async function createServer() {
         throw new AuthorNotFoundError();
       }
 
-      post.author = await userRepository.findOneBy({ id: post.authorId });
+      await AppDataSource.transaction(async (manager) => {
+        const postRepository = manager.getRepository(Post);
+        const userRepository = manager.getRepository(User);
 
-      if (post.author === null) {
-        throw new AuthorNotFoundError();
-      }
+        post.author = await userRepository.findOneBy({ id: post.authorId });
 
-      await postRepository.save(post);
+        if (post.author === null) {
+          throw new AuthorNotFoundError();
+        }
+
+        await postRepository.save(post);
+      });
 
       res.send(post);
     } catch (error: any) {
@@ -117,20 +120,25 @@ async function createServer() {
 
   app.put("/post/:id", async (req: Request, res: Response) => {
     try {
-      const postRepository = AppDataSource.getRepository(Post);
       const post = new Post();
       post.id = parseInt(req.params.id);
       post.title = req.body.title;
       post.body = req.body.body;
-      const result = await postRepository.update(post.id, post);
 
-      if (result.affected === 0) {
-        throw new PostNotFoundError(post.id);
-      }
-      const fullpost = await postRepository.findOne({
-        where: { id: post.id },
-        relations: ["author"],
+      let fullpost;
+      await AppDataSource.transaction(async (manager) => {
+        const postRepository = manager.getRepository(Post);
+        const result = await postRepository.update(post.id, post);
+
+        if (result.affected === 0) {
+          throw new PostNotFoundError(post.id);
+        }
+        fullpost = await postRepository.findOne({
+          where: { id: post.id },
+          relations: ["author"],
+        });
       });
+
       res.send(fullpost);
     } catch (error: any) {
       res.status(400).send({ error: error.message });
