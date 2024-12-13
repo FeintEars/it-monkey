@@ -1,16 +1,15 @@
 import "reflect-metadata";
 import { Request, Response } from "express";
-import { AppDataSource } from "./db.js";
-import { User } from "./entities/user.js";
-import { Post } from "./entities/post.js";
+import { AppDataSource } from "./db";
+import { User } from "./entities/user";
+import { Post } from "./entities/post";
 import express from "express";
 import {
   AuthorNotFoundError,
   UserNotFoundError,
   UserNotDeletedError,
   PostNotFoundError,
-} from "./errors.js";
-import { error } from "console";
+} from "./errors";
 
 async function createServer() {
   await AppDataSource.initialize();
