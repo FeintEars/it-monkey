@@ -15,10 +15,3 @@
 - 💻 **"Хай свобода, як у відкритого коду, веде вас до великих відкриттів!"**
 
 🔗 **Кодьте вільно, кодьте з натхненням!** 🚀
-
-## 📸 Статуя Свободи
-
-![Statue of Liberty 1](examples/content/images/x4_00003_.png)
-![Statue of Liberty 2](examples/content/images/x4_00008_.png)
-![Statue of Liberty 3](examples/content/images/x4_00009_.png)
-![Statue of Liberty 4](examples/content/images/x4_00010_.png)
